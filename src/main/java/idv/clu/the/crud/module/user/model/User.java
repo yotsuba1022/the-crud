@@ -3,6 +3,7 @@ package idv.clu.the.crud.module.user.model;
 import idv.clu.the.crud.module.user.dto.UserDto;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author Carl Lu
@@ -27,6 +28,7 @@ public class User {
     }
 
     private User(Builder builder) {
+        this.id = builder.id;
         this.username = builder.username;
         this.password = builder.password;
         this.firstName = builder.firstName;
@@ -110,6 +112,26 @@ public class User {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        User user = (User) o;
+        return id == user.id && age == user.age && isAdmin == user.isAdmin && isVip == user.isVip && isTest == user.isTest
+                && isSuspended == user.isSuspended && Objects.equals(username, user.username) && Objects.equals(password,
+                user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName)
+                && Objects.equals(birthday, user.birthday) && gender == user.gender && Objects.equals(registrationDate,
+                user.registrationDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, firstName, lastName, birthday, age, gender, registrationDate, isAdmin, isVip,
+                isTest, isSuspended);
+    }
+
+    @Override
     public String toString() {
         return "User{" + "id=" + id + ", username='" + username + '\'' + '\'' + ", firstName='" + firstName + '\''
                 + ", lastName='" + lastName + '\'' + ", birthday=" + birthday + ", age=" + age + ", gender=" + gender
@@ -118,6 +140,7 @@ public class User {
     }
 
     public static class Builder {
+        private long id;
         private String username;
         private String password;
         private String firstName;
@@ -131,66 +154,71 @@ public class User {
         private boolean isTest;
         private boolean isSuspended;
 
-        User build() {
+        public User build() {
             return new User(this);
         }
 
-        Builder setUsername(String username) {
+        public Builder setId(long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setUsername(String username) {
             this.username = username;
             return this;
         }
 
-        Builder setPassword(String password) {
+        public Builder setPassword(String password) {
             this.password = password;
             return this;
         }
 
-        Builder setFirstName(String firstName) {
+        public Builder setFirstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        Builder setLastName(String lastName) {
+        public Builder setLastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
-        Builder setBirthday(LocalDateTime birthday) {
+        public Builder setBirthday(LocalDateTime birthday) {
             this.birthday = birthday;
             return this;
         }
 
-        Builder setAge(int age) {
+        public Builder setAge(int age) {
             this.age = age;
             return this;
         }
 
-        Builder setGender(Gender gender) {
+        public Builder setGender(Gender gender) {
             this.gender = gender;
             return this;
         }
 
-        Builder setRegistrationDate(LocalDateTime registrationDate) {
+        public Builder setRegistrationDate(LocalDateTime registrationDate) {
             this.registrationDate = registrationDate == null ? LocalDateTime.now() : registrationDate;
             return this;
         }
 
-        Builder setAdmin(boolean admin) {
+        public Builder setAdmin(boolean admin) {
             isAdmin = admin;
             return this;
         }
 
-        Builder setVip(boolean vip) {
+        public Builder setVip(boolean vip) {
             isVip = vip;
             return this;
         }
 
-        Builder setTest(boolean test) {
+        public Builder setTest(boolean test) {
             isTest = test;
             return this;
         }
 
-        Builder setSuspended(boolean suspended) {
+        public Builder setSuspended(boolean suspended) {
             isSuspended = suspended;
             return this;
         }

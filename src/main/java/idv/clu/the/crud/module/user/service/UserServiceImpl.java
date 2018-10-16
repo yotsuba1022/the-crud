@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public long createUser(User user) {
-        return userRepository.createUser(user);
+        return userRepository.create(user);
     }
 
     @Override
