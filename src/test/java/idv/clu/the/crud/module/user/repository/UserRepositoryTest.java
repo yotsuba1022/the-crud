@@ -2,6 +2,7 @@ package idv.clu.the.crud.module.user.repository;
 
 import idv.clu.the.crud.module.user.model.Gender;
 import idv.clu.the.crud.module.user.model.User;
+import org.jasypt.encryption.StringEncryptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,13 @@ public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private StringEncryptor stringEncryptor;
+
     @Test
     public void testCreate() {
         User expected = new User.Builder().setUsername("yotsuba1022")
-                .setPassword("!QAZxsw2")
+                .setPassword(stringEncryptor.encrypt("!QAZxsw2"))
                 .setFirstName("Carl")
                 .setLastName("Lu")
                 .setBirthday(LocalDateTime.of(1988, 10, 22, 23, 5, 5))
@@ -47,7 +51,7 @@ public class UserRepositoryTest {
     public void testFindById() {
         User expected = new User.Builder().setId(1)
                 .setUsername("clu")
-                .setPassword("!QAZxsw2")
+                .setPassword("0VmkSkgUxn852egeLBpkq8mCbDlGH5ci")
                 .setFirstName("Carl")
                 .setLastName("Lu")
                 .setBirthday(LocalDateTime.of(1988, 10, 22, 23, 5, 1))
