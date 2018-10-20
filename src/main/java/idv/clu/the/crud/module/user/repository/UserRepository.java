@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 
 /**
  * @author Carl Lu
+ * Repository for USER table in database, implemented by Mybatis mapper.
  */
 @Mapper
 public interface UserRepository {
@@ -18,6 +19,6 @@ public interface UserRepository {
     long create(User user);
 
     @Select("SELECT * from USER where id = #{id}")
-    User findById(long id);
+    User getById(long id);
 
 }

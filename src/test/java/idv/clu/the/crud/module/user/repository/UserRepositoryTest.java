@@ -2,7 +2,7 @@ package idv.clu.the.crud.module.user.repository;
 
 import idv.clu.the.crud.module.user.model.Gender;
 import idv.clu.the.crud.module.user.model.User;
-import org.jasypt.encryption.StringEncryptor;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +22,12 @@ public class UserRepositoryTest {
     private UserRepository userRepository;
 
     @Autowired
-    private StringEncryptor stringEncryptor;
+    private BasicPasswordEncryptor passwordEncryptor;
 
     @Test
     public void testCreate() {
         User expected = new User.Builder().setUsername("yotsuba1022")
-                .setPassword(stringEncryptor.encrypt("!QAZxsw2"))
+                .setPassword(passwordEncryptor.encryptPassword("!QAZxsw2"))
                 .setFirstName("Carl")
                 .setLastName("Lu")
                 .setBirthday(LocalDateTime.of(1988, 10, 22, 23, 5, 5))
@@ -42,7 +42,7 @@ public class UserRepositoryTest {
         userRepository.create(expected);
 
         // After insert, the auto-generated ID should be set to ID field. (Holy Mybatis)
-        User actual = userRepository.findById(expected.getId());
+        User actual = userRepository.getById(expected.getId());
 
         assertEquals(expected, actual);
     }
@@ -51,7 +51,7 @@ public class UserRepositoryTest {
     public void testFindById() {
         User expected = new User.Builder().setId(1)
                 .setUsername("clu")
-                .setPassword("0VmkSkgUxn852egeLBpkq8mCbDlGH5ci")
+                .setPassword("37CvvtouK9P/sDxncXP0MYUMQezjSaWH")
                 .setFirstName("Carl")
                 .setLastName("Lu")
                 .setBirthday(LocalDateTime.of(1988, 10, 22, 23, 5, 1))
@@ -61,7 +61,7 @@ public class UserRepositoryTest {
                 .setAdmin(true)
                 .build();
 
-        User actual = userRepository.findById(1L);
+        User actual = userRepository.getById(1L);
 
         assertEquals(expected.toString(), actual.toString());
     }

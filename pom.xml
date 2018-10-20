@@ -31,6 +31,8 @@
         <java.version>10</java.version>
         <mybatis-spring-boot.version>1.3.2</mybatis-spring-boot.version>
         <jasypt.version>2.0.0</jasypt.version>
+        <cucumber-jvm.version>1.2.5</cucumber-jvm.version>
+        <commons-io.version>2.6</commons-io.version>
     </properties>
 
     <dependencies>
@@ -56,6 +58,13 @@
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
             <version>${jasypt.version}</version>
+        </dependency>
+
+        <!-- Apache commons IO -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
         </dependency>
 
         <!-- Code generation tool -->
@@ -86,7 +95,30 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>runtime</scope>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- For BDD development -->
+        <!-- Cucumber-JVM dependency -->
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber-jvm.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- JUnit and Cucumber testing dependency -->
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>${cucumber-jvm.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Spring and Cucumber dependency -->
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-spring</artifactId>
+            <version>${cucumber-jvm.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

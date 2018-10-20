@@ -1,8 +1,9 @@
 package idv.clu.the.crud.module.user.service;
 
+import idv.clu.the.crud.module.user.dto.UserDto;
 import idv.clu.the.crud.module.user.model.User;
 import idv.clu.the.crud.module.user.repository.UserRepository;
-import org.jasypt.encryption.StringEncryptor;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,24 +18,25 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final StringEncryptor stringEncryptor;
+    private final BasicPasswordEncryptor passwordEncryptor;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
-    public UserServiceImpl(final UserRepository userRepository, final StringEncryptor stringEncryptor) {
+    public UserServiceImpl(final UserRepository userRepository, final BasicPasswordEncryptor passwordEncryptor) {
         this.userRepository = userRepository;
-        this.stringEncryptor = stringEncryptor;
+        this.passwordEncryptor = passwordEncryptor;
     }
 
     @Override
     public long createUser(User user) {
-        user.setPassword(stringEncryptor.encrypt(user.getPassword()));
-        return userRepository.create(user);
+        user.setPassword(passwordEncryptor.encryptPassword(user.getPassword()));
+        userRepository.create(user);
+        return user.getId();
     }
 
     @Override
-    public User getUserById(long id) {
-        return null;
+    public UserDto getUserById(long id) {
+        return UserDto.of(userRepository.getById(id));
     }
 
     @Override

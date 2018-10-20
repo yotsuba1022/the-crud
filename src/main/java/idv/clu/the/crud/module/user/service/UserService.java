@@ -1,5 +1,6 @@
 package idv.clu.the.crud.module.user.service;
 
+import idv.clu.the.crud.module.user.dto.UserDto;
 import idv.clu.the.crud.module.user.model.User;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface UserService {
 
     long createUser(User user);
 
-    User getUserById(long id);
+    UserDto getUserById(long id);
 
     User getUserByUsername(String username);
 

@@ -1,14 +1,18 @@
 package idv.clu.the.crud.module.user.model;
 
 import idv.clu.the.crud.module.user.dto.UserDto;
+import idv.clu.the.crud.module.user.util.TimeInstance;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
  * @author Carl Lu
+ * <p>
+ * Domain object for USER table.
  */
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,10 +24,10 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-    private LocalDateTime birthday;
+    private Timestamp birthday;
     private int age;
     private Gender gender;
-    private LocalDateTime registrationDate;
+    private Timestamp registrationDate;
     private boolean isAdmin;
     private boolean isVip;
     private boolean isTest;
@@ -67,10 +71,10 @@ public class User {
         private String password;
         private String firstName;
         private String lastName;
-        private LocalDateTime birthday;
+        private Timestamp birthday;
         private int age;
         private Gender gender;
-        private LocalDateTime registrationDate;
+        private Timestamp registrationDate;
         private boolean isAdmin;
         private boolean isVip;
         private boolean isTest;
@@ -106,7 +110,7 @@ public class User {
         }
 
         public Builder setBirthday(LocalDateTime birthday) {
-            this.birthday = birthday;
+            this.birthday = TimeInstance.ISO8601TW.getTimestamp(birthday);
             return this;
         }
 
@@ -121,7 +125,9 @@ public class User {
         }
 
         public Builder setRegistrationDate(LocalDateTime registrationDate) {
-            this.registrationDate = registrationDate == null ? LocalDateTime.now() : registrationDate;
+            this.registrationDate = registrationDate == null ?
+                    TimeInstance.ISO8601TW.getTimestamp(LocalDateTime.now()) :
+                    TimeInstance.ISO8601TW.getTimestamp(registrationDate);
             return this;
         }
 

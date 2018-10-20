@@ -11,7 +11,7 @@ Trello Board: [Click me](https://trello.com/b/R6dgEl2m/the-crud-storyboard)
 This side project contains the following modules:
 - User module: Dealing with user related business logic.
 
-## Technical Stack, Environment and Components
+## Environment, Technical Stack and Components
 - Operating System: macOS (High Sierra)
 - Development Language: Java (Oracle JDK10)
 - Web Container: Tomcat (Spring-boot embedded)
@@ -23,6 +23,7 @@ This side project contains the following modules:
 - Cryptography: Jasypt (2.0.0)
 - Code Generation: Lombok (1.16.22)
 - Unit Test: JUnit (4.12)
+- Behavior Driven Development: Cucumber (1.2.5)
 - Build Tool: Maven (3.3.3)
 
 ## API Design Document
