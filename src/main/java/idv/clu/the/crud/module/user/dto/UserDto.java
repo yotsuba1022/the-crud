@@ -66,10 +66,10 @@ public class UserDto {
         userDto.setUsername(user.getUsername());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
-        userDto.setBirthday(TimeInstance.ISO8601TW.fromTimestamp(user.getBirthday()));
+        userDto.setBirthday(TimeInstance.ISO8601TW.getLocalDateTimeFromTimestamp(user.getBirthday()));
         userDto.setAge(user.getAge());
         userDto.setGender(user.getGender());
-        userDto.setRegistrationDate(TimeInstance.ISO8601TW.fromTimestamp(user.getRegistrationDate()));
+        userDto.setRegistrationDate(TimeInstance.ISO8601TW.getLocalDateTimeFromTimestamp(user.getRegistrationDate()));
         userDto.setAdmin(user.isAdmin());
         userDto.setVip(user.isVip());
         userDto.setTest(user.isTest());

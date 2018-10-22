@@ -13,7 +13,7 @@ public enum TimeInstance implements TimeConvertible {
 
     ISO8601TW {
         @Override
-        public Timestamp getTimestamp(LocalDateTime localDateTime) {
+        public Timestamp getTimestampFromLocalDateTime(LocalDateTime localDateTime) {
             return Timestamp.from(getInstantFromLocalDateTime(localDateTime));
         }
 
@@ -23,17 +23,17 @@ public enum TimeInstance implements TimeConvertible {
         }
 
         @Override
-        public LocalDateTime fromTimestamp(Timestamp timestamp) {
+        public LocalDateTime getLocalDateTimeFromTimestamp(Timestamp timestamp) {
             return LocalDateTime.ofInstant(timestamp.toInstant(), ZoneId.of(ZONE_ID_TAIPEI));
         }
 
         @Override
-        public LocalDateTime fromInstant(Instant instant) {
+        public LocalDateTime getLocalDateTimeFromInstant(Instant instant) {
             return instant.atZone(ZoneId.of(ZONE_ID_TAIPEI)).toLocalDateTime();
         }
     }, ISO8601TOKYO {
         @Override
-        public Timestamp getTimestamp(LocalDateTime localDateTime) {
+        public Timestamp getTimestampFromLocalDateTime(LocalDateTime localDateTime) {
             return Timestamp.from(getInstantFromLocalDateTime(localDateTime));
         }
 
@@ -43,17 +43,17 @@ public enum TimeInstance implements TimeConvertible {
         }
 
         @Override
-        public LocalDateTime fromTimestamp(Timestamp timestamp) {
+        public LocalDateTime getLocalDateTimeFromTimestamp(Timestamp timestamp) {
             return LocalDateTime.ofInstant(timestamp.toInstant(), ZoneId.of(ZONE_ID_TOKYO));
         }
 
         @Override
-        public LocalDateTime fromInstant(Instant instant) {
+        public LocalDateTime getLocalDateTimeFromInstant(Instant instant) {
             return instant.atZone(ZoneId.of(ZONE_ID_TOKYO)).toLocalDateTime();
         }
     }, ISO8601UTC {
         @Override
-        public Timestamp getTimestamp(LocalDateTime localDateTime) {
+        public Timestamp getTimestampFromLocalDateTime(LocalDateTime localDateTime) {
             return Timestamp.from(getInstantFromLocalDateTime(localDateTime));
         }
 
@@ -63,12 +63,12 @@ public enum TimeInstance implements TimeConvertible {
         }
 
         @Override
-        public LocalDateTime fromTimestamp(Timestamp timestamp) {
+        public LocalDateTime getLocalDateTimeFromTimestamp(Timestamp timestamp) {
             return LocalDateTime.ofInstant(timestamp.toInstant(), ZoneId.of(ZONE_ID_GREENWICH));
         }
 
         @Override
-        public LocalDateTime fromInstant(Instant instant) {
+        public LocalDateTime getLocalDateTimeFromInstant(Instant instant) {
             return instant.atZone(ZoneId.of(ZONE_ID_GREENWICH)).toLocalDateTime();
         }
     };

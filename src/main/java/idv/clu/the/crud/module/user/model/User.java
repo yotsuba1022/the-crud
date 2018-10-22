@@ -110,7 +110,7 @@ public class User {
         }
 
         public Builder setBirthday(LocalDateTime birthday) {
-            this.birthday = TimeInstance.ISO8601TW.getTimestamp(birthday);
+            this.birthday = TimeInstance.ISO8601TW.getTimestampFromLocalDateTime(birthday);
             return this;
         }
 
@@ -126,8 +126,8 @@ public class User {
 
         public Builder setRegistrationDate(LocalDateTime registrationDate) {
             this.registrationDate = registrationDate == null ?
-                    TimeInstance.ISO8601TW.getTimestamp(LocalDateTime.now()) :
-                    TimeInstance.ISO8601TW.getTimestamp(registrationDate);
+                    TimeInstance.ISO8601TW.getTimestampFromLocalDateTime(LocalDateTime.now()) :
+                    TimeInstance.ISO8601TW.getTimestampFromLocalDateTime(registrationDate);
             return this;
         }
 

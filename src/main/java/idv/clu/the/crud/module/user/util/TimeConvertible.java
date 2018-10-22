@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
  */
 public interface TimeConvertible {
 
-    Timestamp getTimestamp(LocalDateTime localDateTime);
+    Timestamp getTimestampFromLocalDateTime(LocalDateTime localDateTime);
 
     Instant getInstantFromLocalDateTime(LocalDateTime localDateTime);
 
-    LocalDateTime fromTimestamp(Timestamp timestamp);
+    LocalDateTime getLocalDateTimeFromTimestamp(Timestamp timestamp);
 
-    LocalDateTime fromInstant(Instant instant);
+    LocalDateTime getLocalDateTimeFromInstant(Instant instant);
 
 }
