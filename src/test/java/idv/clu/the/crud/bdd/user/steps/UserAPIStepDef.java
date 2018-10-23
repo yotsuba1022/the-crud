@@ -23,7 +23,6 @@ import static org.junit.Assert.assertEquals;
 @Slf4j
 public class UserAPIStepDef extends BasicStepDef {
 
-    private final String USER_TABLE_NAME = "USER";
     private final String GET_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/user";
     private final String CREATE_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/user";
     private final String HTTP_RESPONSE_CODE = "responseCode";
@@ -39,8 +38,6 @@ public class UserAPIStepDef extends BasicStepDef {
     @When("^I create an user with the following information, I should get the response with http status code \"([^\"]*)\"$")
     public void iCreateAnUserWithTheFollowingInformationIShouldGetTheResponseWithHttpStatusCode(String expectedResponseCodeStr,
             List<User> newUserList) throws Throwable {
-        resetTable(USER_TABLE_NAME);
-
         final Map<String, String> headers = getDefaultHttpHeadersForPostRequest();
         String requestBody = getObjectMapper().writeValueAsString(newUserList.get(0));
         log.debug("Create user with request body: {}", requestBody);

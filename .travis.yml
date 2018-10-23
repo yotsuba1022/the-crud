@@ -1,0 +1,13 @@
+language: java
+sudo: false
+
+branches:
+  only:
+  - master
+
+jdk:
+- openjdk10
+
+install: true
+script: mvn clean test
+

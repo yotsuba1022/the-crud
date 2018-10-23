@@ -25,7 +25,7 @@ public class UserRepositoryTest {
     private BasicPasswordEncryptor passwordEncryptor;
 
     @Test
-    public void testCreate() {
+    public void testCreateAndGetById() {
         User expected = new User.Builder().setUsername("yotsuba1022")
                 .setPassword(passwordEncryptor.encryptPassword("!QAZxsw2"))
                 .setFirstName("Carl")
@@ -45,25 +45,6 @@ public class UserRepositoryTest {
         User actual = userRepository.getById(expected.getId());
 
         assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testFindById() {
-        User expected = new User.Builder().setId(1)
-                .setUsername("clu")
-                .setPassword("37CvvtouK9P/sDxncXP0MYUMQezjSaWH")
-                .setFirstName("Carl")
-                .setLastName("Lu")
-                .setBirthday(LocalDateTime.of(1988, 10, 22, 23, 5, 1))
-                .setAge(30)
-                .setGender(Gender.MALE)
-                .setRegistrationDate(LocalDateTime.of(2018, 10, 16, 21, 45, 1))
-                .setAdmin(true)
-                .build();
-
-        User actual = userRepository.getById(1L);
-
-        assertEquals(expected.toString(), actual.toString());
     }
 
 }
