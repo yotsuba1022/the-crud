@@ -1,4 +1,5 @@
 # The CRUD
+[![Build Status](https://travis-ci.com/yotsuba1022/the-curd.svg?branch=master)](https://travis-ci.com/yotsuba1022/the-curd)
 [![Hex.pm](https://img.shields.io/badge/language-java-blue.svg)]()
 [![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)]()
 
@@ -25,6 +26,7 @@ This side project contains the following modules:
 - Unit Test: JUnit (4.12)
 - Behavior Driven Development: Cucumber (1.2.5)
 - Build Tool: Maven (3.3.3)
+- CI Service: [Travis CI](https://travis-ci.com/)
 
 ## API Design Document
 - TBD
