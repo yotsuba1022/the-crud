@@ -1,19 +1,22 @@
-package idv.clu.the.crud.bdd.user.steps;
+package idv.clu.the.crud.bdd.module.user.steps;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import idv.clu.the.crud.bdd.cucumber.BasicStepDef;
 import idv.clu.the.crud.bdd.cucumber.ScenarioContext;
-import idv.clu.the.crud.bdd.user.ResponseResults;
-import idv.clu.the.crud.bdd.user.model.User;
+import idv.clu.the.crud.bdd.module.user.model.ErrorResponse;
+import idv.clu.the.crud.bdd.module.user.model.User;
 import idv.clu.the.crud.module.user.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Carl Lu
@@ -23,10 +26,11 @@ import static org.junit.Assert.assertEquals;
 @Slf4j
 public class UserAPIStepDef extends BasicStepDef {
 
-    private final String GET_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/user";
+    private final String GET_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/user/{id}";
     private final String CREATE_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/user";
     private final String HTTP_RESPONSE_CODE = "responseCode";
     private final String CREATED_USER_ID = "createdUserId";
+    private final String ERROR_MESSAGE = "errorMessage";
 
     private final ScenarioContext stepContext;
 
@@ -38,19 +42,31 @@ public class UserAPIStepDef extends BasicStepDef {
     @When("^I create an user with the following information, I should get the response with http status code \"([^\"]*)\"$")
     public void iCreateAnUserWithTheFollowingInformationIShouldGetTheResponseWithHttpStatusCode(String expectedResponseCodeStr,
             List<User> newUserList) throws Throwable {
-        final Map<String, String> headers = getDefaultHttpHeadersForPostRequest();
-        String requestBody = getObjectMapper().writeValueAsString(newUserList.get(0));
-        log.debug("Create user with request body: {}", requestBody);
+        User newUser = newUserList.get(0);
+        log.debug("Create user with request body: {}", newUser);
 
-        ResponseResults responseResults = doPost(CREATE_USER_REQUEST_URL, headers, requestBody);
-        log.debug("Response code: {}, response body: {}", responseResults.getResponse().getRawStatusCode(),
-                responseResults.getResponseBodyString());
+        Unirest.setObjectMapper(getUnirestObjectMapper());
 
-        int responseCode = responseResults.getResponse().getRawStatusCode();
+        HttpResponse<String> postResponse = Unirest.post(CREATE_USER_REQUEST_URL)
+                .header("accept", CONTENT_TYPE_APPLICATION_JSON)
+                .header("Content-Type", CONTENT_TYPE_APPLICATION_JSON)
+                .body(newUser)
+                .asString();
+
+        int responseCode = postResponse.getStatus();
+        String responseBody = postResponse.getBody();
+
+        log.debug("Response code: {}, response body: {}", responseCode, responseBody);
+
         int expectedResponseCode = Integer.valueOf(expectedResponseCodeStr);
         assertEquals(expectedResponseCode, responseCode);
 
-        stepContext.getContextData().put(CREATED_USER_ID, responseResults.getResponseBodyString());
+        if (responseCode >= 400) {
+            stepContext.getContextData().put(ERROR_MESSAGE, responseBody);
+        } else {
+            stepContext.getContextData().put(CREATED_USER_ID, responseBody);
+        }
+
         stepContext.getContextData().put(HTTP_RESPONSE_CODE, responseCode);
     }
 
@@ -59,10 +75,9 @@ public class UserAPIStepDef extends BasicStepDef {
         User expectedUser = expectedUserList.get(0);
         String createdUserId = (String) stepContext.getContextData().get(CREATED_USER_ID);
 
-        ResponseResults responseResults = doGet(GET_USER_REQUEST_URL + "/" + createdUserId, new HashMap<>());
-
-        String actualUserJson = responseResults.getResponseBodyString();
-        UserDto actualUser = getObjectMapper().readValue(actualUserJson, UserDto.class);
+        HttpResponse<UserDto> bookResponse =
+                Unirest.get(GET_USER_REQUEST_URL).routeParam("id", createdUserId).asObject(UserDto.class);
+        UserDto actualUser = bookResponse.getBody();
 
         assertEquals(expectedUser.getUsername(), actualUser.getUsername());
         assertEquals(expectedUser.getFirstName(), actualUser.getFirstName());
@@ -75,6 +90,13 @@ public class UserAPIStepDef extends BasicStepDef {
         assertEquals(expectedUser.isVip(), actualUser.isVip());
         assertEquals(expectedUser.isTest(), actualUser.isTest());
         assertEquals(expectedUser.isSuspended(), actualUser.isSuspended());
+    }
+
+    @Then("^the response body should contains the following messages$")
+    public void theResponseBodyShouldContainsTheFollowingMessages(List<ErrorResponse> errorResponses) {
+        String expectedErrorResponse = errorResponses.get(0).getMessage();
+        String actualErrorResponseMessage = (String) stepContext.getContextData().get(ERROR_MESSAGE);
+        assertTrue(actualErrorResponseMessage.contains(expectedErrorResponse));
     }
 
 }

@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.PositiveOrZero;
@@ -25,7 +26,7 @@ public class UserDto {
 
     private long id;
 
-    @NotNull(message = "username is a required field.")
+    @NotBlank(message = "username is a required field.")
     private String username;
 
     @NotNull(message = "password is a required field.")

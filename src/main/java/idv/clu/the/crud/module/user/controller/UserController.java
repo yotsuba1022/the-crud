@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -42,20 +41,26 @@ public class UserController {
         return this.userService.createUser(user);
     }
 
+    @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public List<String> handleUserValidationExceptions(final MethodArgumentNotValidException exception) {
-        return exception.getBindingResult()
+    public Error handleUserValidationExceptions(final MethodArgumentNotValidException exception) {
+        Error error = new Error();
+        error.setMessage(exception.getBindingResult()
                 .getAllErrors()
                 .stream()
                 .map(ObjectError::getDefaultMessage)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
+        return error;
     }
 
+    @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DuplicateKeyException.class)
-    public List<String> handleDuplicateKeyException(final DuplicateKeyException duplicateKeyException) {
-        return Collections.singletonList(duplicateKeyException.getCause().getMessage());
+    public Error handleDuplicateKeyException(final DuplicateKeyException duplicateKeyException) {
+        Error error = new Error();
+        error.setMessage(Collections.singletonList(duplicateKeyException.getCause().getMessage()));
+        return error;
     }
 
 }

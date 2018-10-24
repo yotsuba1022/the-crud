@@ -1,4 +1,4 @@
-package idv.clu.the.crud.bdd.user.model;
+package idv.clu.the.crud.bdd.module.user.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,9 +8,9 @@ import lombok.Data;
  */
 @AllArgsConstructor
 @Data
-public class ExpectedResponse {
+public class ErrorResponse {
 
     private int httpCode;
-    private String responseBody;
+    private String message;
 
 }

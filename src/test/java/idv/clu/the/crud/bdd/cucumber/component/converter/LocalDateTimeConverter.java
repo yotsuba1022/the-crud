@@ -1,4 +1,4 @@
-package idv.clu.the.crud.bdd.user;
+package idv.clu.the.crud.bdd.cucumber.component.converter;
 
 import cucumber.deps.com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
 

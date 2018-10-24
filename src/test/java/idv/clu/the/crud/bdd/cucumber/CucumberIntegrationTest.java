@@ -1,8 +1,7 @@
-package idv.clu.the.crud.bdd.user;
+package idv.clu.the.crud.bdd.cucumber;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
-import idv.clu.the.crud.bdd.user.steps.BasicStepDef;
 import org.junit.runner.RunWith;
 
 /**
@@ -13,6 +12,6 @@ import org.junit.runner.RunWith;
  * The annotation @CucumberOptions indicates the location of the Gherkin file which is also known as the feature file.
  */
 @RunWith(Cucumber.class)
-@CucumberOptions(features = {"src/test/resources/features"})
+@CucumberOptions(features = {"src/test/resources/features"}, glue = {"idv.clu.the.crud.bdd.module"})
 public class CucumberIntegrationTest extends BasicStepDef {
 }
