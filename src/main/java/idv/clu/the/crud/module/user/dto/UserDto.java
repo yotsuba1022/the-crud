@@ -29,22 +29,22 @@ public class UserDto {
     @NotBlank(message = "username is a required field.")
     private String username;
 
-    @NotNull(message = "password is a required field.")
+    @NotBlank(message = "password is a required field.")
     private String password;
 
-    @NotNull(message = "firstName is a required field.")
+    @NotBlank(message = "firstName is a required field.")
     private String firstName;
 
-    @NotNull(message = "lastName is a required field.")
+    @NotBlank(message = "lastName is a required field.")
     private String lastName;
 
     @NotNull(message = "birthday is a required field.")
-    @Past
+    @Past(message = "back to the future!!!")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime birthday;
 
     @NotNull(message = "age is a required field.")
-    @PositiveOrZero
+    @PositiveOrZero(message = "age should be positive or zero.")
     private int age;
 
     @NotNull(message = "gender is a required field.")

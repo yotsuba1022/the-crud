@@ -6,18 +6,18 @@ import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter;
 import idv.clu.the.crud.bdd.cucumber.component.converter.LocalDateTimeConverter;
 import idv.clu.the.crud.bdd.cucumber.component.converter.StringToGenderConverter;
 import idv.clu.the.crud.module.user.model.Gender;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 /**
  * @author Carl Lu
  */
-@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class User {
-    
+
     private String username;
     private String password;
     private String firstName;

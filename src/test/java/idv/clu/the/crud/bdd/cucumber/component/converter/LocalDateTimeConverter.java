@@ -17,7 +17,7 @@ public class LocalDateTimeConverter extends AbstractSingleValueConverter {
 
     @Override
     public Object fromString(String localDateTimeStr) {
-        return LocalDateTime.parse(localDateTimeStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        return localDateTimeStr.isEmpty() ? null : LocalDateTime.parse(localDateTimeStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     }
 
 }

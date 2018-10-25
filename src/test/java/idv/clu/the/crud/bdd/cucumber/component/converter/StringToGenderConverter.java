@@ -15,7 +15,7 @@ public class StringToGenderConverter extends AbstractSingleValueConverter {
 
     @Override
     public Object fromString(String genderStr) {
-        return Gender.valueOf(genderStr);
+        return genderStr.isEmpty() ? null : Gender.valueOf(genderStr);
     }
 
 }

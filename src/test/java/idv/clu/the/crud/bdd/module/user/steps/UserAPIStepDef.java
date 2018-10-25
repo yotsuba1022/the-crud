@@ -94,9 +94,10 @@ public class UserAPIStepDef extends BasicStepDef {
 
     @Then("^the response body should contains the following messages$")
     public void theResponseBodyShouldContainsTheFollowingMessages(List<ErrorResponse> errorResponses) {
-        String expectedErrorResponse = errorResponses.get(0).getMessage();
         String actualErrorResponseMessage = (String) stepContext.getContextData().get(ERROR_MESSAGE);
-        assertTrue(actualErrorResponseMessage.contains(expectedErrorResponse));
+        errorResponses.stream()
+                .map(ErrorResponse::getMessage)
+                .forEach(expectedErrorResponse -> assertTrue(actualErrorResponseMessage.contains(expectedErrorResponse)));
     }
 
 }
