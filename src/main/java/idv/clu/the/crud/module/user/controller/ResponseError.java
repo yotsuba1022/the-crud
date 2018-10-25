@@ -10,8 +10,13 @@ import java.util.List;
  */
 @NoArgsConstructor
 @Data
-public class Error {
+class ResponseError {
 
-    private List<String> message;
+    private String type;
+    private List<String> messages;
+
+    ResponseError(String type) {
+        this.type = type;
+    }
 
 }
