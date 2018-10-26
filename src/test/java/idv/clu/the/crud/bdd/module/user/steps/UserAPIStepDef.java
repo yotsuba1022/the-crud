@@ -26,8 +26,8 @@ import static org.junit.Assert.assertTrue;
 @Slf4j
 public class UserAPIStepDef extends BasicStepDef {
 
-    private final String GET_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/user/{id}";
-    private final String CREATE_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/user";
+    private final String GET_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/v1/users/{id}";
+    private final String CREATE_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/v1/users";
     private final String HTTP_RESPONSE_CODE = "responseCode";
     private final String CREATED_USER_ID = "createdUserId";
     private final String ERROR_MESSAGE = "errorMessage";
