@@ -33,7 +33,7 @@ public class User {
     private boolean isTest;
     private boolean isSuspended;
 
-    private User(Builder builder) {
+    private User(final Builder builder) {
         this.id = builder.id;
         this.username = builder.username;
         this.password = builder.password;

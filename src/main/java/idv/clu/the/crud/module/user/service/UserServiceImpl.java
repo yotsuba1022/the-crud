@@ -1,7 +1,7 @@
 package idv.clu.the.crud.module.user.service;
 
-import idv.clu.the.crud.module.user.dto.UserDto;
 import idv.clu.the.crud.module.user.model.User;
+import idv.clu.the.crud.module.user.repository.UserQueryCriteria;
 import idv.clu.the.crud.module.user.repository.UserRepository;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,34 +28,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public long createUser(User user) {
+    public long create(final User user) {
         user.setPassword(passwordEncryptor.encryptPassword(user.getPassword()));
         userRepository.create(user);
         return user.getId();
     }
 
     @Override
-    public UserDto getUserById(long id) {
-        return UserDto.of(userRepository.getById(id));
+    public List<User> getByQueryCriteria(final UserQueryCriteria queryCriteria) {
+        return userRepository.getByQueryCriteria(queryCriteria);
     }
 
     @Override
-    public User getUserByUsername(String username) {
+    public List<User> getUsers(int limit, int offset) {
         return null;
     }
 
     @Override
-    public List<User> getUserList(int limit, int offset) {
-        return null;
-    }
-
-    @Override
-    public long updateUser(User user) {
+    public long update(User user) {
         return 0;
     }
 
     @Override
-    public long deleteUser(long id) {
+    public long delete(long id) {
         return 0;
     }
 

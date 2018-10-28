@@ -4,7 +4,9 @@ import idv.clu.the.crud.module.user.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
+
+import java.util.List;
 
 /**
  * @author Carl Lu
@@ -18,7 +20,7 @@ public interface UserRepository {
     @Options(useGeneratedKeys = true, keyColumn = "id")
     long create(User user);
 
-    @Select("SELECT * from USER where id = #{id}")
-    User getById(long id);
+    @SelectProvider(type = UserProvider.class, method = "getByQueryCriteria")
+    List<User> getByQueryCriteria(UserQueryCriteria queryCriteria);
 
 }

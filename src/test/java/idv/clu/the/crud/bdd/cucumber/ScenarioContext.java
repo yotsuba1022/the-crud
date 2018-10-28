@@ -2,6 +2,7 @@ package idv.clu.the.crud.bdd.cucumber;
 
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -10,10 +11,9 @@ import java.util.Map;
 @Component
 public class ScenarioContext {
 
-    private final Map<String, Object> contextData;
+    private final Map<String, Object> contextData = new HashMap<>();
 
-    public ScenarioContext(Map<String, Object> contextData) {
-        this.contextData = contextData;
+    public ScenarioContext() {
     }
 
     public Map<String, Object> getContextData() {

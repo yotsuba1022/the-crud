@@ -1,7 +1,7 @@
 package idv.clu.the.crud.module.user.service;
 
-import idv.clu.the.crud.module.user.dto.UserDto;
 import idv.clu.the.crud.module.user.model.User;
+import idv.clu.the.crud.module.user.repository.UserQueryCriteria;
 
 import java.util.List;
 
@@ -12,17 +12,15 @@ import java.util.List;
  */
 public interface UserService {
 
-    long createUser(User user);
+    long create(User user);
 
-    UserDto getUserById(long id);
+    List<User> getByQueryCriteria(UserQueryCriteria queryCriteria);
 
-    User getUserByUsername(String username);
+    List<User> getUsers(int limit, int offset);
 
-    List<User> getUserList(int limit, int offset);
+    long update(User user);
 
-    long updateUser(User user);
-
-    long deleteUser(long id);
+    long delete(long id);
 
     long addToAdmin(long id);
 

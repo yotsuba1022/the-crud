@@ -13,10 +13,10 @@ import idv.clu.the.crud.module.user.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author Carl Lu
@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 @Slf4j
 public class UserAPIStepDef extends BasicStepDef {
 
-    private final String GET_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/v1/users/{id}";
+    private final String GET_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/v1/users";
     private final String CREATE_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/v1/users";
     private final String HTTP_RESPONSE_CODE = "responseCode";
     private final String CREATED_USER_ID = "createdUserId";
@@ -72,13 +72,17 @@ public class UserAPIStepDef extends BasicStepDef {
 
     @And("^the following user record should exist in the database$")
     public void theFollowingUserRecordShouldExistInTheDatabase(List<User> expectedUserList) throws Throwable {
-        User expectedUser = expectedUserList.get(0);
-        String createdUserId = (String) stepContext.getContextData().get(CREATED_USER_ID);
+        final User expectedUser = expectedUserList.get(0);
+        final String createdUserId = (String) stepContext.getContextData().get(CREATED_USER_ID);
+        final String queryByIdUrl = GET_USER_REQUEST_URL + "?id={id}";
 
-        HttpResponse<UserDto> bookResponse =
-                Unirest.get(GET_USER_REQUEST_URL).routeParam("id", createdUserId).asObject(UserDto.class);
-        UserDto actualUser = bookResponse.getBody();
+        HttpResponse<UserDto[]> bookResponse =
+                Unirest.get(queryByIdUrl).routeParam("id", createdUserId).asObject(UserDto[].class);
+        List<UserDto> users = Arrays.asList(bookResponse.getBody());
 
+        UserDto actualUser = users.stream().filter(user -> user.getId() == Long.valueOf(createdUserId)).findFirst().get();
+
+        assertNotNull(actualUser);
         assertEquals(expectedUser.getUsername(), actualUser.getUsername());
         assertEquals(expectedUser.getFirstName(), actualUser.getFirstName());
         assertEquals(expectedUser.getLastName(), actualUser.getLastName());

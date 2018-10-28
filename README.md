@@ -13,7 +13,7 @@ This side project contains the following modules:
 - User module: Dealing with user related business logic.
 
 ## Environment, Technical Stack and Components
-- Operating System: macOS (High Sierra)
+- Operating System: macOS (Mojave)
 - Development Language: Java (Oracle JDK10)
 - Web Container: Tomcat (Spring-boot embedded)
 - Application Framework: Spring Boot (2.0.5 RELEASE)

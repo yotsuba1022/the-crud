@@ -41,8 +41,14 @@ public class UserRepositoryTest {
 
         userRepository.create(expected);
 
+        UserQueryCriteria queryCriteria = new UserQueryCriteria.Builder().setId(expected.getId()).build();
+
         // After insert, the auto-generated ID should be set to ID field. (Holy Mybatis)
-        User actual = userRepository.getById(expected.getId());
+        User actual = userRepository.getByQueryCriteria(queryCriteria)
+                .stream()
+                .filter(user -> user.getId() == expected.getId())
+                .findFirst()
+                .get();
 
         assertEquals(expected, actual);
     }
