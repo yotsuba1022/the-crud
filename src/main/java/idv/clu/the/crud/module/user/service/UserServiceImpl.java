@@ -38,12 +38,7 @@ public class UserServiceImpl implements UserService {
     public List<User> getByQueryCriteria(final UserQueryCriteria queryCriteria) {
         return userRepository.getByQueryCriteria(queryCriteria);
     }
-
-    @Override
-    public List<User> getUsers(int limit, int offset) {
-        return null;
-    }
-
+    
     @Override
     public long update(User user) {
         return 0;

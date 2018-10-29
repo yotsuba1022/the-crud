@@ -16,8 +16,6 @@ public interface UserService {
 
     List<User> getByQueryCriteria(UserQueryCriteria queryCriteria);
 
-    List<User> getUsers(int limit, int offset);
-
     long update(User user);
 
     long delete(long id);

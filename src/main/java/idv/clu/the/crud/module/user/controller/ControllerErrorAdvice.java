@@ -25,10 +25,10 @@ public class ControllerErrorAdvice {
     public ResponseError handleUserValidationExceptions(final MethodArgumentNotValidException exception) {
         ResponseError error = new ResponseError(exception.getClass().getName());
         error.setMessages(exception.getBindingResult()
-                .getAllErrors()
-                .stream()
-                .map(ObjectError::getDefaultMessage)
-                .collect(Collectors.toList()));
+                                  .getAllErrors()
+                                  .stream()
+                                  .map(ObjectError::getDefaultMessage)
+                                  .collect(Collectors.toList()));
         return error;
     }
 
@@ -38,6 +38,15 @@ public class ControllerErrorAdvice {
     public ResponseError handleInvalidFormatException(final InvalidFormatException exception) {
         ResponseError error = new ResponseError(exception.getClass().getName());
         error.setMessages(Collections.singletonList("Invalid input format for value: " + exception.getValue()));
+        return error;
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({NumberFormatException.class, IllegalArgumentException.class})
+    public ResponseError handleNumberFormatException(final RuntimeException exception) {
+        ResponseError error = new ResponseError(exception.getClass().getName());
+        error.setMessages(Collections.singletonList(exception.getMessage()));
         return error;
     }
 

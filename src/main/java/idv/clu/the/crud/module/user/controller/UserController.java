@@ -5,7 +5,12 @@ import idv.clu.the.crud.module.user.model.User;
 import idv.clu.the.crud.module.user.repository.UserQueryCriteria;
 import idv.clu.the.crud.module.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -35,9 +40,36 @@ public class UserController {
 
     @GetMapping
     public List<UserDto> getByQuery(@RequestParam(value = "id", required = false) final Long id,
-            @RequestParam(value = "username", required = false) final String username) {
-        final UserQueryCriteria queryCriteria = new UserQueryCriteria.Builder().setId(id).setUsername(username).build();
+                                    @RequestParam(value = "username", required = false) final String username,
+                                    @RequestParam(value = "firstName", required = false) final String firstName,
+                                    @RequestParam(value = "lastName", required = false) final String lastName,
+                                    @RequestParam(value = "age", required = false) final Integer age,
+                                    @RequestParam(value = "gender", required = false) final String gender,
+                                    @RequestParam(value = "isVip", required = false, defaultValue = "false")
+                                    final String isVip,
+                                    @RequestParam(value = "orderBy", required = false, defaultValue = "id")
+                                    final String orderBy,
+                                    @RequestParam(value = "isDesc", required = false, defaultValue = "true")
+                                    final String isDesc,
+                                    @RequestParam(value = "limit", required = false, defaultValue = "10")
+                                    final String limit,
+                                    @RequestParam(value = "offset", required = false, defaultValue = "0")
+                                    final String offset) {
+        final UserQueryCriteria queryCriteria = new UserQueryCriteria.Builder().setId(id)
+                .setUsername(username)
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setAge(age)
+                .setGender(gender)
+                .isVip(Boolean.valueOf(isVip))
+                .setOrderBy(orderBy)
+                .isDesc(Boolean.valueOf(isDesc))
+                .setLimit(limit)
+                .setOffset(offset)
+                .build();
+
         final List<User> users = this.userService.getByQueryCriteria(queryCriteria);
+
         return users.stream().map(UserDto::of).collect(Collectors.toList());
     }
 

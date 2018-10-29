@@ -41,9 +41,45 @@ public class UserRepositoryTest {
 
         userRepository.create(expected);
 
-        UserQueryCriteria queryCriteria = new UserQueryCriteria.Builder().setId(expected.getId()).build();
+        UserQueryCriteria queryCriteria = new UserQueryCriteria.Builder().setId(expected.getId())
+                .setOrderBy("id")
+                .isDesc(true)
+                .setLimit("10")
+                .setOffset("0")
+                .build();
 
         // After insert, the auto-generated ID should be set to ID field. (Holy Mybatis)
+        User actual = userRepository.getByQueryCriteria(queryCriteria)
+                .stream()
+                .filter(user -> user.getId() == expected.getId())
+                .findFirst()
+                .get();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGetByQueryCriteria() {
+        User expected = new User.Builder().setUsername("criteriaTester")
+                .setPassword(passwordEncryptor.encryptPassword("criteria123"))
+                .setFirstName("Criteria")
+                .setLastName("Mao")
+                .setBirthday(LocalDateTime.of(2001, 1, 12, 13, 15, 5))
+                .setAge(17)
+                .setGender(Gender.FEMALE)
+                .setRegistrationDate(LocalDateTime.of(2018, 10, 16, 23, 2, 10))
+                .build();
+
+        userRepository.create(expected);
+
+        UserQueryCriteria queryCriteria = new UserQueryCriteria.Builder().setId(expected.getId())
+                .setUsername(expected.getUsername())
+                .setOrderBy("id")
+                .isDesc(true)
+                .setLimit("10")
+                .setOffset("0")
+                .build();
+
         User actual = userRepository.getByQueryCriteria(queryCriteria)
                 .stream()
                 .filter(user -> user.getId() == expected.getId())
