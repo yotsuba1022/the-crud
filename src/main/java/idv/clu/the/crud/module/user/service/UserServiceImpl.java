@@ -35,13 +35,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getById(long id) {
+        return userRepository.getById(id);
+    }
+
+    @Override
     public List<User> getByQueryCriteria(final UserQueryCriteria queryCriteria) {
         return userRepository.getByQueryCriteria(queryCriteria);
     }
-    
+
     @Override
-    public long update(User user) {
-        return 0;
+    public long update(User updatedUser) {
+        return userRepository.update(updatedUser);
     }
 
     @Override

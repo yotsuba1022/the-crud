@@ -38,13 +38,13 @@ public class UserProvider {
         return query;
     }
 
-    private void constructNonNullQueryParameter(final SQL sql, Object parameter, String query) {
+    private void constructNonNullQueryParameter(final SQL sql, final Object parameter, final String query) {
         if (null != parameter) {
             sql.WHERE(query);
         }
     }
 
-    private void constructStringTypeQueryParameter(SQL sql, String strValue, String query) {
+    private void constructStringTypeQueryParameter(final SQL sql, final String strValue, final String query) {
         if (!StringUtils.isEmpty(strValue)) {
             sql.WHERE(query);
         }

@@ -1,10 +1,12 @@
 package idv.clu.the.crud.module.user.model;
 
+import idv.clu.the.crud.module.user.dto.UpdateUserDto;
 import idv.clu.the.crud.module.user.dto.UserDto;
 import idv.clu.the.crud.module.user.util.TimeInstance;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -63,6 +65,30 @@ public class User {
                 .setTest(userDto.isTest())
                 .setSuspended(userDto.isSuspended())
                 .build();
+    }
+
+    public User updateBy(UpdateUserDto updateUserDto) {
+        if (!StringUtils.isEmpty(updateUserDto.getFirstName())) {
+            this.setFirstName(updateUserDto.getFirstName());
+        }
+
+        if (!StringUtils.isEmpty(updateUserDto.getLastName())) {
+            this.setLastName(updateUserDto.getLastName());
+        }
+
+        if (updateUserDto.getBirthday() != null) {
+            this.setBirthday(TimeInstance.ISO8601TW.getTimestampFromLocalDateTime(updateUserDto.getBirthday()));
+        }
+
+        if (updateUserDto.getAge() > 0) {
+            this.setAge(updateUserDto.getAge());
+        }
+
+        if (updateUserDto.getGender() != null) {
+            this.setGender(updateUserDto.getGender());
+        }
+
+        return this;
     }
 
     public static class Builder {

@@ -1,12 +1,15 @@
 package idv.clu.the.crud.module.user.controller;
 
+import idv.clu.the.crud.module.user.dto.UpdateUserDto;
 import idv.clu.the.crud.module.user.dto.UserDto;
 import idv.clu.the.crud.module.user.model.User;
 import idv.clu.the.crud.module.user.repository.UserQueryCriteria;
 import idv.clu.the.crud.module.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +39,13 @@ public class UserController {
     public long create(@RequestBody @Valid final UserDto userDto) {
         final User user = User.from(userDto);
         return this.userService.create(user);
+    }
+
+    @PutMapping(path = "/{id}")
+    public long update(@PathVariable long id, @RequestBody @Valid final UpdateUserDto updateUserDto) {
+        User updatedUser = this.userService.getById(id).updateBy(updateUserDto);
+        this.userService.update(updatedUser);
+        return updatedUser.getId();
     }
 
     @GetMapping

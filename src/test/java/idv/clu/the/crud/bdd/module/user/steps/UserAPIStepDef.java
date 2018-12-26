@@ -10,6 +10,7 @@ import cucumber.api.java.en.When;
 import idv.clu.the.crud.bdd.cucumber.BasicStepDef;
 import idv.clu.the.crud.bdd.cucumber.ScenarioContext;
 import idv.clu.the.crud.bdd.module.user.model.ErrorResponse;
+import idv.clu.the.crud.bdd.module.user.model.UpdateUser;
 import idv.clu.the.crud.bdd.module.user.model.User;
 import idv.clu.the.crud.bdd.module.user.model.UserQueryParameter;
 import idv.clu.the.crud.module.user.dto.UserDto;
@@ -38,6 +39,7 @@ public class UserAPIStepDef extends BasicStepDef {
 
     private final String GET_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/v1/users";
     private final String CREATE_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/v1/users";
+    private final String UPDATE_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/v1/users";
     private final String HTTP_RESPONSE_CODE = "responseCode";
     private final String CREATED_USER_ID = "createdUserId";
     private final String QUERY_USER_RESULTS = "queryUserResults";
@@ -75,6 +77,29 @@ public class UserAPIStepDef extends BasicStepDef {
             stepContext.getContextData().put(ERROR_MESSAGE, responseBody);
         } else {
             stepContext.getContextData().put(CREATED_USER_ID, responseBody);
+        }
+
+        stepContext.getContextData().put(HTTP_RESPONSE_CODE, responseCode);
+    }
+
+    @And("^update the user record with the following information, I should get the response with http status code \""
+            + "([^\"]*)\"$")
+    public void updateTheUserRecordWithTheFollowingInformationIShouldGetTheResponseWithHttpStatusCode(
+            String expectedResponseCodeStr, List<UpdateUser> updateUserList) throws Throwable {
+        final String createdUserId = (String) stepContext.getContextData().get(CREATED_USER_ID);
+        log.debug("User id for update: {}", createdUserId);
+        HttpResponse<String> updateUserResponse = updateUser(createdUserId, updateUserList.get(0));
+
+        int responseCode = updateUserResponse.getStatus();
+        String responseBody = updateUserResponse.getBody();
+
+        log.debug("Response code: {}, response body: {}", responseCode, responseBody);
+
+        int expectedResponseCode = Integer.valueOf(expectedResponseCodeStr);
+        assertEquals(expectedResponseCode, responseCode);
+
+        if (responseCode >= 400) {
+            stepContext.getContextData().put(ERROR_MESSAGE, responseBody);
         }
 
         stepContext.getContextData().put(HTTP_RESPONSE_CODE, responseCode);
@@ -155,6 +180,17 @@ public class UserAPIStepDef extends BasicStepDef {
                 .header("accept", CONTENT_TYPE_APPLICATION_JSON)
                 .header("Content-Type", CONTENT_TYPE_APPLICATION_JSON)
                 .body(user)
+                .asString();
+    }
+
+    private HttpResponse<String> updateUser(final String createdUserId, final UpdateUser updateUser)
+            throws UnirestException {
+        log.debug("Update user with request body: {}", updateUser);
+        Unirest.setObjectMapper(getUnirestObjectMapper());
+        return Unirest.put(UPDATE_USER_REQUEST_URL + "/" + createdUserId)
+                .header("accept", CONTENT_TYPE_APPLICATION_JSON)
+                .header("Content-Type", CONTENT_TYPE_APPLICATION_JSON)
+                .body(updateUser)
                 .asString();
     }
 

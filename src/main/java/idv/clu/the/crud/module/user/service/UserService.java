@@ -14,6 +14,8 @@ public interface UserService {
 
     long create(User user);
 
+    User getById(long id);
+
     List<User> getByQueryCriteria(UserQueryCriteria queryCriteria);
 
     long update(User user);

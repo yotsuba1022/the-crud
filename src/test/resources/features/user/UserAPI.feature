@@ -11,6 +11,18 @@ Feature: User API related features
       | username | firstName | lastName | birthday            | age | gender | registrationDate    | isAdmin | isVip | isTest | isSuspended |
       | ruru0513 | Ruru      | Cheng    | 1991-05-13T09:15:01 | 27  | FEMALE | 2018-10-16T21:45:01 | true    | true  | false  | false       |
 
+  @user_update
+  Scenario: As an user, I should be able to update an existing user record in database
+    When I create an user with the following information, I should get the response with http status code "200"
+      | username | password | firstName | lastName | birthday            | age | gender | registrationDate    | isAdmin | isVip | isTest | isSuspended |
+      | jojo02   | !QAZ2wsx | Josephy   | Joestara | 1920-09-17T09:15:01 | 88  | FEMALE | 2018-12-26T15:07:01 | false   | false | false  | false       |
+    And update the user record with the following information, I should get the response with http status code "200"
+      | firstName | lastName | birthday            | age | gender |
+      | Joseph    | Joestar  | 1920-09-27T09:15:01 | 88  | MALE   |
+    Then the following user record should exist in the database
+      | username | firstName | lastName | birthday            | age | gender | registrationDate    | isAdmin | isVip | isTest | isSuspended |
+      | jojo02   | Joseph    | Joestar  | 1920-09-27T09:15:01 | 88  | MALE   | 2018-12-26T15:07:01 | false   | false | false  | false       |
+
   @user_query
   Scenario: As an user, I should be able to query user records with composed query conditions
     Given the following newly-created users
@@ -170,6 +182,24 @@ Feature: User API related features
       | back to the future!!!           |
       | age should be positive or zero. |
       | gender is a required field.     |
+
+  @user_update @user_update_error_case
+  Scenario: As an user I should get validation error message when update user record with invalid birthday value
+    And update the user record with the following information, I should get the response with http status code "400"
+      | firstName | lastName | birthday            | age | gender |
+      | Joseph    | Joestar  | 2920-09-27T09:15:01 | 88  | MALE   |
+    Then the response body should contains the following messages
+      | message               |
+      | back to the future!!! |
+
+  @user_update @user_update_error_case
+  Scenario: As an user I should get validation error message when update user record with invalid age value
+    And update the user record with the following information, I should get the response with http status code "400"
+      | firstName | lastName | birthday            | age | gender |
+      | Joseph    | Joestar  | 1920-09-27T09:15:01 | -88 | MALE   |
+    Then the response body should contains the following messages
+      | message                         |
+      | age should be positive or zero. |
 
   @user_query @user_query_error_case
   Scenario: As an user, I should get validation error message when querying user records with invalid id value
