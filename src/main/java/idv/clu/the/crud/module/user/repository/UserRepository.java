@@ -1,6 +1,7 @@
 package idv.clu.the.crud.module.user.repository;
 
 import idv.clu.the.crud.module.user.model.User;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -33,5 +34,8 @@ public interface UserRepository {
     @Update({"UPDATE USER SET " + "username = #{username}," + "first_name = #{firstName}," + "last_name = #{lastName},"
             + "birthday = #{birthday}," + "age = #{age}," + "gender = #{gender} WHERE id = #{id}"})
     long update(User user);
+
+    @Delete("DELETE from USER where id = #{id}")
+    long delete(long id);
 
 }

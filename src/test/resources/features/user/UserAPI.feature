@@ -23,6 +23,13 @@ Feature: User API related features
       | username | firstName | lastName | birthday            | age | gender | registrationDate    | isAdmin | isVip | isTest | isSuspended |
       | jojo02   | Joseph    | Joestar  | 1920-09-27T09:15:01 | 88  | MALE   | 2018-12-26T15:07:01 | false   | false | false  | false       |
 
+  @user_delete
+  Scenario: As an user, I should be able to delete an existing user record in database
+    When I create an user with the following information, I should get the response with http status code "200"
+      | username | password | firstName | lastName | birthday            | age | gender | registrationDate    | isAdmin | isVip | isTest | isSuspended |
+      | dio001   | !QAZ2wsx | Dio       | Brando   | 1867-03-17T01:15:01 | 151 | MALE   | 2018-12-27T11:29:03 | false   | false | false  | false       |
+    And delete the user record, I should get the response with http status code "200"
+
   @user_query
   Scenario: As an user, I should be able to query user records with composed query conditions
     Given the following newly-created users

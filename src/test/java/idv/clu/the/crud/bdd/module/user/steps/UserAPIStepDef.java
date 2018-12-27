@@ -37,9 +37,7 @@ import static org.junit.Assert.assertTrue;
 @Slf4j
 public class UserAPIStepDef extends BasicStepDef {
 
-    private final String GET_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/v1/users";
-    private final String CREATE_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/v1/users";
-    private final String UPDATE_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/v1/users";
+    private final String BASIC_USER_REQUEST_URL = "http://localhost:8080/the-crud/api/v1/users";
     private final String HTTP_RESPONSE_CODE = "responseCode";
     private final String CREATED_USER_ID = "createdUserId";
     private final String QUERY_USER_RESULTS = "queryUserResults";
@@ -105,6 +103,28 @@ public class UserAPIStepDef extends BasicStepDef {
         stepContext.getContextData().put(HTTP_RESPONSE_CODE, responseCode);
     }
 
+    @And("^delete the user record, I should get the response with http status code \"([^\"]*)\"$")
+    public void deleteTheUserRecordIShouldGetTheResponseWithHttpStatusCode(String expectedResponseCodeStr)
+            throws Throwable {
+        final String createdUserId = (String) stepContext.getContextData().get(CREATED_USER_ID);
+        log.debug("User id for delete: {}", createdUserId);
+        HttpResponse<String> deleteUserResponse = deleteUser(createdUserId);
+
+        int responseCode = deleteUserResponse.getStatus();
+        String responseBody = deleteUserResponse.getBody();
+
+        log.debug("Response code: {}, response body: {}", responseCode, responseBody);
+
+        int expectedResponseCode = Integer.valueOf(expectedResponseCodeStr);
+        assertEquals(expectedResponseCode, responseCode);
+
+        if (responseCode >= 400) {
+            stepContext.getContextData().put(ERROR_MESSAGE, responseBody);
+        }
+
+        stepContext.getContextData().put(HTTP_RESPONSE_CODE, responseCode);
+    }
+
     @When("^I search user with the following information, I should get the response with http status code \"([^\"]*)"
             + "\"$")
     public void iSearchUserWithTheFollowingInformationIShouldGetTheResponseWithHttpStatusCode(
@@ -114,7 +134,7 @@ public class UserAPIStepDef extends BasicStepDef {
 
         Unirest.setObjectMapper(getUnirestObjectMapper());
 
-        final String queryUrl = constructQueryUserURL(GET_USER_REQUEST_URL, queryParameter);
+        final String queryUrl = constructQueryUserURL(BASIC_USER_REQUEST_URL, queryParameter);
 
         try {
             HttpResponse<UserDto[]> queryUserResponse = Unirest.get(queryUrl).asObject(UserDto[].class);
@@ -153,7 +173,7 @@ public class UserAPIStepDef extends BasicStepDef {
     public void theFollowingUserRecordShouldExistInTheDatabase(List<User> expectedUserList) throws Throwable {
         final User expected = expectedUserList.get(0);
         final String createdUserId = (String) stepContext.getContextData().get(CREATED_USER_ID);
-        final String queryByIdUrl = GET_USER_REQUEST_URL + "?id={id}";
+        final String queryByIdUrl = BASIC_USER_REQUEST_URL + "?id={id}";
 
         HttpResponse<UserDto[]> queryUserResponse =
                 Unirest.get(queryByIdUrl).routeParam("id", createdUserId).asObject(UserDto[].class);
@@ -176,7 +196,7 @@ public class UserAPIStepDef extends BasicStepDef {
     private HttpResponse<String> createUser(final User user) throws UnirestException {
         log.debug("Create user with request body: {}", user);
         Unirest.setObjectMapper(getUnirestObjectMapper());
-        return Unirest.post(CREATE_USER_REQUEST_URL)
+        return Unirest.post(BASIC_USER_REQUEST_URL)
                 .header("accept", CONTENT_TYPE_APPLICATION_JSON)
                 .header("Content-Type", CONTENT_TYPE_APPLICATION_JSON)
                 .body(user)
@@ -187,11 +207,17 @@ public class UserAPIStepDef extends BasicStepDef {
             throws UnirestException {
         log.debug("Update user with request body: {}", updateUser);
         Unirest.setObjectMapper(getUnirestObjectMapper());
-        return Unirest.put(UPDATE_USER_REQUEST_URL + "/" + createdUserId)
+        return Unirest.put(BASIC_USER_REQUEST_URL + "/" + createdUserId)
                 .header("accept", CONTENT_TYPE_APPLICATION_JSON)
                 .header("Content-Type", CONTENT_TYPE_APPLICATION_JSON)
                 .body(updateUser)
                 .asString();
+    }
+
+    private HttpResponse<String> deleteUser(final String createdUserId) throws UnirestException {
+        log.debug("Delete user with user id: {}", createdUserId);
+        Unirest.setObjectMapper(getUnirestObjectMapper());
+        return Unirest.delete(BASIC_USER_REQUEST_URL + "/" + createdUserId).asString();
     }
 
     private String constructQueryUserURL(final String basicUrl, final UserQueryParameter queryParameter) {

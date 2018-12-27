@@ -6,6 +6,7 @@ import idv.clu.the.crud.module.user.model.User;
 import idv.clu.the.crud.module.user.repository.UserQueryCriteria;
 import idv.clu.the.crud.module.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +47,11 @@ public class UserController {
         User updatedUser = this.userService.getById(id).updateBy(updateUserDto);
         this.userService.update(updatedUser);
         return updatedUser.getId();
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public long delete(@PathVariable long id) {
+        return this.userService.delete(id);
     }
 
     @GetMapping
