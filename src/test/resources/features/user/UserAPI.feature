@@ -30,6 +30,15 @@ Feature: User API related features
       | dio001   | !QAZ2wsx | Dio       | Brando   | 1867-03-17T01:15:01 | 151 | MALE   | 2018-12-27T11:29:03 | false   | false | false  | false       |
     And delete the user record, I should get the response with http status code "200"
 
+  @user_get
+  Scenario: As an user, I should be able to get an existing user record in database by id
+    When I create an user with the following information, I should get the response with http status code "200"
+      | username | password | firstName | lastName | birthday            | age | gender | registrationDate    | isAdmin | isVip | isTest | isSuspended |
+      | jojo03   | !QAZ2wsx | Jotaro    | Kujo     | 1970-05-11T01:15:01 | 48  | MALE   | 2018-12-27T22:39:01 | false   | false | false  | false       |
+    Then I can get the following user record by id with http status code "200"
+      | username | firstName | lastName | birthday            | age | gender | registrationDate    | isAdmin | isVip | isTest | isSuspended |
+      | jojo03   | Jotaro    | Kujo     | 1970-05-11T01:15:01 | 48  | MALE   | 2018-12-27T22:39:01 | false   | false | false  | false       |
+
   @user_query
   Scenario: As an user, I should be able to query user records with composed query conditions
     Given the following newly-created users

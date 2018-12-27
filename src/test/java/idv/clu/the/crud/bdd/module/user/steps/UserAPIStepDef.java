@@ -125,6 +125,31 @@ public class UserAPIStepDef extends BasicStepDef {
         stepContext.getContextData().put(HTTP_RESPONSE_CODE, responseCode);
     }
 
+    @Then("^I can get the following user record by id with http status code \"([^\"]*)\"$")
+    public void iCanGetTheFollowingUserRecordByIdWithHttpStatusCode(String expectedResponseCodeStr,
+                                                                    List<User> expectedUserList) throws Throwable {
+        final String createdUserId = (String) stepContext.getContextData().get(CREATED_USER_ID);
+        log.debug("User id for get: {}", createdUserId);
+        HttpResponse<UserDto> getUserResponse = getUser(createdUserId);
+
+        int responseCode = getUserResponse.getStatus();
+        UserDto actual = getUserResponse.getBody();
+
+        log.debug("Response code: {}, response body: {}", responseCode, actual);
+
+        int expectedResponseCode = Integer.valueOf(expectedResponseCodeStr);
+        assertEquals(expectedResponseCode, responseCode);
+
+        if (responseCode >= 400) {
+            stepContext.getContextData().put(ERROR_MESSAGE, actual);
+        }
+
+        final User expected = expectedUserList.get(0);
+        verifyUser(expected, actual);
+
+        stepContext.getContextData().put(HTTP_RESPONSE_CODE, responseCode);
+    }
+
     @When("^I search user with the following information, I should get the response with http status code \"([^\"]*)"
             + "\"$")
     public void iSearchUserWithTheFollowingInformationIShouldGetTheResponseWithHttpStatusCode(
@@ -215,9 +240,15 @@ public class UserAPIStepDef extends BasicStepDef {
     }
 
     private HttpResponse<String> deleteUser(final String createdUserId) throws UnirestException {
-        log.debug("Delete user with user id: {}", createdUserId);
+        log.debug("Delete user by user id: {}", createdUserId);
         Unirest.setObjectMapper(getUnirestObjectMapper());
         return Unirest.delete(BASIC_USER_REQUEST_URL + "/" + createdUserId).asString();
+    }
+
+    private HttpResponse<UserDto> getUser(final String createdUserId) throws UnirestException {
+        log.debug("Get user by user id: {}", createdUserId);
+        Unirest.setObjectMapper(getUnirestObjectMapper());
+        return Unirest.get(BASIC_USER_REQUEST_URL + "/" + createdUserId).asObject(UserDto.class);
     }
 
     private String constructQueryUserURL(final String basicUrl, final UserQueryParameter queryParameter) {

@@ -44,7 +44,7 @@ public class UserController {
 
     @PutMapping(path = "/{id}")
     public long update(@PathVariable long id, @RequestBody @Valid final UpdateUserDto updateUserDto) {
-        User updatedUser = this.userService.getById(id).updateBy(updateUserDto);
+        final User updatedUser = this.userService.getById(id).updateBy(updateUserDto);
         this.userService.update(updatedUser);
         return updatedUser.getId();
     }
@@ -52,6 +52,11 @@ public class UserController {
     @DeleteMapping(path = "/{id}")
     public long delete(@PathVariable long id) {
         return this.userService.delete(id);
+    }
+
+    @GetMapping(path = "/{id}")
+    public UserDto getById(@PathVariable long id) {
+        return UserDto.of(this.userService.getById(id));
     }
 
     @GetMapping
