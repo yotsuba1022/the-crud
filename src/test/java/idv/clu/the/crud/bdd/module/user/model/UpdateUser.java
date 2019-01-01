@@ -3,6 +3,7 @@ package idv.clu.the.crud.bdd.module.user.model;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter;
+import cucumber.deps.com.thoughtworks.xstream.converters.basic.BooleanConverter;
 import idv.clu.the.crud.bdd.cucumber.component.converter.LocalDateTimeConverter;
 import idv.clu.the.crud.bdd.cucumber.component.converter.StringToGenderConverter;
 import idv.clu.the.crud.module.user.model.Gender;
@@ -29,5 +30,17 @@ public class UpdateUser {
 
     @XStreamConverter(StringToGenderConverter.class)
     private Gender gender;
+
+    @XStreamConverter(BooleanConverter.class)
+    private boolean isAdmin;
+
+    @XStreamConverter(BooleanConverter.class)
+    private boolean isVip;
+
+    @XStreamConverter(BooleanConverter.class)
+    private boolean isTest;
+
+    @XStreamConverter(BooleanConverter.class)
+    private boolean isSuspended;
 
 }

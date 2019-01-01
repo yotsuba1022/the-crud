@@ -17,11 +17,11 @@ Feature: User API related features
       | username | password | firstName | lastName | birthday            | age | gender | registrationDate    | isAdmin | isVip | isTest | isSuspended |
       | jojo02   | !QAZ2wsx | Josephy   | Joestara | 1920-09-17T09:15:01 | 88  | FEMALE | 2018-12-26T15:07:01 | false   | false | false  | false       |
     And update the user record with the following information, I should get the response with http status code "200"
-      | firstName | lastName | birthday            | age | gender |
-      | Joseph    | Joestar  | 1920-09-27T09:15:01 | 88  | MALE   |
+      | firstName | lastName | birthday            | age | gender | isAdmin | isVip | isTest | isSuspended |
+      | Joseph    | Joestar  | 1920-09-27T09:15:01 | 88  | MALE   | true    | true  | true   | true        |
     Then the following user record should exist in the database
       | username | firstName | lastName | birthday            | age | gender | registrationDate    | isAdmin | isVip | isTest | isSuspended |
-      | jojo02   | Joseph    | Joestar  | 1920-09-27T09:15:01 | 88  | MALE   | 2018-12-26T15:07:01 | false   | false | false  | false       |
+      | jojo02   | Joseph    | Joestar  | 1920-09-27T09:15:01 | 88  | MALE   | 2018-12-26T15:07:01 | true    | true  | true   | true        |
 
   @user_delete
   Scenario: As an user, I should be able to delete an existing user record in database

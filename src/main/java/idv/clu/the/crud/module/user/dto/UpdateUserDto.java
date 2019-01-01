@@ -1,6 +1,7 @@
 package idv.clu.the.crud.module.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import idv.clu.the.crud.module.user.model.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 /**
  * @author Carl Lu
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,5 +32,13 @@ public class UpdateUserDto {
     private int age;
 
     private Gender gender;
+
+    private boolean isAdmin;
+
+    private boolean isVip;
+
+    private boolean isTest;
+
+    private boolean isSuspended;
 
 }

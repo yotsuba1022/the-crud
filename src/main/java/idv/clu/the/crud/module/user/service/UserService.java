@@ -22,20 +22,4 @@ public interface UserService {
 
     long delete(long id);
 
-    long addToAdmin(long id);
-
-    long removeFromAdmin(long id);
-
-    long addToVip(long id);
-
-    long removeFromVip(long id);
-
-    long addToTest(long id);
-
-    long removeFromTest(long id);
-
-    long suspend(long id);
-
-    long reactivate(long id);
-
 }

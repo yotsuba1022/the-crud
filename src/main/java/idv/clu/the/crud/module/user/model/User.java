@@ -88,6 +88,22 @@ public class User {
             this.setGender(updateUserDto.getGender());
         }
 
+        if (updateUserDto.isAdmin() != this.isAdmin) {
+            this.setAdmin(updateUserDto.isAdmin());
+        }
+
+        if (updateUserDto.isVip() != this.isVip) {
+            this.setVip(updateUserDto.isVip());
+        }
+
+        if (updateUserDto.isTest() != this.isTest) {
+            this.setTest(updateUserDto.isTest());
+        }
+
+        if (updateUserDto.isSuspended() != this.isSuspended) {
+            this.setSuspended(updateUserDto.isSuspended());
+        }
+
         return this;
     }
 

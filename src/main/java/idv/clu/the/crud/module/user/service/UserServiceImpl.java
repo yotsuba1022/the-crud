@@ -54,44 +54,4 @@ public class UserServiceImpl implements UserService {
         return userRepository.delete(id);
     }
 
-    @Override
-    public long addToAdmin(long id) {
-        return 0;
-    }
-
-    @Override
-    public long removeFromAdmin(long id) {
-        return 0;
-    }
-
-    @Override
-    public long addToVip(long id) {
-        return 0;
-    }
-
-    @Override
-    public long removeFromVip(long id) {
-        return 0;
-    }
-
-    @Override
-    public long addToTest(long id) {
-        return 0;
-    }
-
-    @Override
-    public long removeFromTest(long id) {
-        return 0;
-    }
-
-    @Override
-    public long suspend(long id) {
-        return 0;
-    }
-
-    @Override
-    public long reactivate(long id) {
-        return 0;
-    }
-
 }
