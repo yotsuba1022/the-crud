@@ -6,6 +6,8 @@ import idv.clu.the.crud.module.user.model.User;
 import idv.clu.the.crud.module.user.repository.UserQueryCriteria;
 import idv.clu.the.crud.module.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,45 +39,55 @@ public class UserController {
     }
 
     @PostMapping
-    public long create(@RequestBody @Valid final UserDto userDto) {
+    public ResponseEntity<Long> create(@RequestBody @Valid final UserDto userDto) {
         final User user = User.from(userDto);
-        return this.userService.create(user);
+        return new ResponseEntity<>(this.userService.create(user), HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/{id}")
-    public long update(@PathVariable long id, @RequestBody @Valid final UpdateUserDto updateUserDto) {
+    public ResponseEntity<Long> update(@PathVariable long id, @RequestBody @Valid final UpdateUserDto updateUserDto) {
         final User updatedUser = this.userService.getById(id).updateBy(updateUserDto);
         this.userService.update(updatedUser);
-        return updatedUser.getId();
+        return new ResponseEntity<>(updatedUser.getId(), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{id}")
-    public long delete(@PathVariable long id) {
-        return this.userService.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable long id) {
+        this.userService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(path = "/{id}")
-    public UserDto getById(@PathVariable long id) {
-        return UserDto.of(this.userService.getById(id));
+    public ResponseEntity<UserDto> getById(@PathVariable long id) {
+        return new ResponseEntity<>(UserDto.of(this.userService.getById(id)), HttpStatus.OK);
     }
 
     @GetMapping
-    public List<UserDto> getByQuery(@RequestParam(value = "id", required = false) final Long id,
-                                    @RequestParam(value = "username", required = false) final String username,
-                                    @RequestParam(value = "firstName", required = false) final String firstName,
-                                    @RequestParam(value = "lastName", required = false) final String lastName,
-                                    @RequestParam(value = "age", required = false) final Integer age,
-                                    @RequestParam(value = "gender", required = false) final String gender,
-                                    @RequestParam(value = "isVip", required = false, defaultValue = "false")
-                                    final String isVip,
-                                    @RequestParam(value = "orderBy", required = false, defaultValue = "id")
-                                    final String orderBy,
-                                    @RequestParam(value = "isDesc", required = false, defaultValue = "true")
-                                    final String isDesc,
-                                    @RequestParam(value = "limit", required = false, defaultValue = "10")
-                                    final String limit,
-                                    @RequestParam(value = "offset", required = false, defaultValue = "0")
-                                    final String offset) {
+    public ResponseEntity<List<UserDto>> getByQuery(@RequestParam(value = "id", required = false) final Long id,
+                                                    @RequestParam(value = "username", required = false)
+                                                    final String username,
+                                                    @RequestParam(value = "firstName", required = false)
+                                                    final String firstName,
+                                                    @RequestParam(value = "lastName", required = false)
+                                                    final String lastName,
+                                                    @RequestParam(value = "age", required = false) final Integer age,
+                                                    @RequestParam(value = "gender", required = false)
+                                                    final String gender,
+                                                    @RequestParam(value = "isVip", required = false, defaultValue =
+                                                            "false")
+                                                    final String isVip,
+                                                    @RequestParam(value = "orderBy", required = false, defaultValue =
+                                                            "id")
+                                                    final String orderBy,
+                                                    @RequestParam(value = "isDesc", required = false, defaultValue =
+                                                            "true")
+                                                    final String isDesc,
+                                                    @RequestParam(value = "limit", required = false, defaultValue =
+                                                            "10")
+                                                    final String limit,
+                                                    @RequestParam(value = "offset", required = false, defaultValue =
+                                                            "0")
+                                                    final String offset) {
         final UserQueryCriteria queryCriteria = new UserQueryCriteria.Builder().setId(id)
                 .setUsername(username)
                 .setFirstName(firstName)
@@ -91,7 +103,7 @@ public class UserController {
 
         final List<User> users = this.userService.getByQueryCriteria(queryCriteria);
 
-        return users.stream().map(UserDto::of).collect(Collectors.toList());
+        return new ResponseEntity<>(users.stream().map(UserDto::of).collect(Collectors.toList()), HttpStatus.OK);
     }
 
 }

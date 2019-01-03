@@ -4,7 +4,7 @@ Feature: User API related features
 # Normal Cases
   @user_creation
   Scenario: As an user, I should be able to create an user record in database
-    When I create an user with the following information, I should get the response with http status code "200"
+    When I create an user with the following information, I should get the response with http status code "201"
       | username | password | firstName | lastName | birthday            | age | gender | registrationDate    | isAdmin | isVip | isTest | isSuspended |
       | ruru0513 | !QAZ2wsx | Ruru      | Cheng    | 1991-05-13T09:15:01 | 27  | FEMALE | 2018-10-16T21:45:01 | true    | true  | false  | false       |
     Then the following user record should exist in the database
@@ -13,7 +13,7 @@ Feature: User API related features
 
   @user_update
   Scenario: As an user, I should be able to update an existing user record in database
-    When I create an user with the following information, I should get the response with http status code "200"
+    When I create an user with the following information, I should get the response with http status code "201"
       | username | password | firstName | lastName | birthday            | age | gender | registrationDate    | isAdmin | isVip | isTest | isSuspended |
       | jojo02   | !QAZ2wsx | Josephy   | Joestara | 1920-09-17T09:15:01 | 88  | FEMALE | 2018-12-26T15:07:01 | false   | false | false  | false       |
     And update the user record with the following information, I should get the response with http status code "200"
@@ -25,14 +25,14 @@ Feature: User API related features
 
   @user_delete
   Scenario: As an user, I should be able to delete an existing user record in database
-    When I create an user with the following information, I should get the response with http status code "200"
+    When I create an user with the following information, I should get the response with http status code "201"
       | username | password | firstName | lastName | birthday            | age | gender | registrationDate    | isAdmin | isVip | isTest | isSuspended |
       | dio001   | !QAZ2wsx | Dio       | Brando   | 1867-03-17T01:15:01 | 151 | MALE   | 2018-12-27T11:29:03 | false   | false | false  | false       |
-    And delete the user record, I should get the response with http status code "200"
+    And delete the user record, I should get the response with http status code "204"
 
   @user_get
   Scenario: As an user, I should be able to get an existing user record in database by id
-    When I create an user with the following information, I should get the response with http status code "200"
+    When I create an user with the following information, I should get the response with http status code "201"
       | username | password | firstName | lastName | birthday            | age | gender | registrationDate    | isAdmin | isVip | isTest | isSuspended |
       | jojo03   | !QAZ2wsx | Jotaro    | Kujo     | 1970-05-11T01:15:01 | 48  | MALE   | 2018-12-27T22:39:01 | false   | false | false  | false       |
     Then I can get the following user record by id with http status code "200"
