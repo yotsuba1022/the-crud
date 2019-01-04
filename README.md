@@ -28,6 +28,34 @@ This side project contains the following modules:
 - Behavior Driven Development: [Cucumber](https://cucumber.io/) (1.2.5)
 - Build Tool: [Maven](https://maven.apache.org/) (3.3.3)
 - CI Service: [Travis CI](https://travis-ci.com/)
+- API Documentation: [Swagger](https://swagger.io/)
+
+## Sample CURL Command
+###### Create User
+```
+$ curl -v -H "Content-Type:application/json" -X POST "http://localhost:8080/the-crud/api/v1/users" -d '{"username":"rabido1022","password":"!QAZ2wsx","firstName":"Rabido","lastName":"JOJO","birthday":"1988-10-22T09:15:01","age":30,"gender":"MALE","registrationDate":"2019-01-03T23:15:01","test":false,"admin":true,"suspended":false,"vip":true}' | python -m json.tool
+```
+###### Update User
+```
+$ curl -v -H "Content-Type:application/json" -X PUT "http://localhost:8080/the-crud/api/v1/users/26" -d '{"firstName":"JOJO", "lastName":"Lue", "birthday":"1988-10-22T23:15:15", "age":30, "gender":"MALE", "admin":true, "vip":true, "test":true, "suspended":true}' | python -m json.tool
+```
+###### Get User
+```
+$ curl -v -X GET "http://localhost:8080/the-crud/api/v1/users/1" | python -m json.tool
+```
+###### Query Users
+```
+$ curl -v -X GET "http://localhost:8080/the-crud/api/v1/users?id=1" | python -m json.tool
+$ curl -v -X GET "http://localhost:8080/the-crud/api/v1/users?isVip=true&firstName=Rabido" | python -m json.tool
+```
+###### Delete User
+```
+$ curl -v -X DELETE "http://localhost:8080/the-crud/api/v1/users/23" | python -m json.tool
+```
+
+## Swagger UI Link
+- [Default Link](http://localhost:8080/the-crud/swagger-ui.html#/)
+- [Customized Link](http://localhost:8080/the-crud/docs)
 
 ## API Design Document
 - TBD
