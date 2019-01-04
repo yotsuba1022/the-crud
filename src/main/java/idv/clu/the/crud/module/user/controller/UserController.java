@@ -5,6 +5,8 @@ import idv.clu.the.crud.module.user.dto.UserDto;
 import idv.clu.the.crud.module.user.model.User;
 import idv.clu.the.crud.module.user.repository.UserQueryCriteria;
 import idv.clu.the.crud.module.user.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,7 @@ import java.util.stream.Collectors;
  * <p>
  * User API controller.
  */
+@Api(description = "Contract of User Module")
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
@@ -38,12 +41,14 @@ public class UserController {
         this.userService = userService;
     }
 
+    @ApiOperation(value = "Create User", notes = "Create a user with necessary information.")
     @PostMapping
     public ResponseEntity<Long> create(@RequestBody @Valid final UserDto userDto) {
         final User user = User.from(userDto);
         return new ResponseEntity<>(this.userService.create(user), HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "Update User", notes = "Update specific user with provided information.")
     @PutMapping(path = "/{id}")
     public ResponseEntity<Long> update(@PathVariable long id, @RequestBody @Valid final UpdateUserDto updateUserDto) {
         final User updatedUser = this.userService.getById(id).updateBy(updateUserDto);
@@ -51,17 +56,20 @@ public class UserController {
         return new ResponseEntity<>(updatedUser.getId(), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Delete User", notes = "Delete specific user by user ID.")
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
         this.userService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @ApiOperation(value = "Get User", notes = "Get specific user by user ID.")
     @GetMapping(path = "/{id}")
     public ResponseEntity<UserDto> getById(@PathVariable long id) {
         return new ResponseEntity<>(UserDto.of(this.userService.getById(id)), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Query Users", notes = "Query user records by query criteria parameters.")
     @GetMapping
     public ResponseEntity<List<UserDto>> getByQuery(@RequestParam(value = "id", required = false) final Long id,
                                                     @RequestParam(value = "username", required = false)
