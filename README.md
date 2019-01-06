@@ -14,7 +14,8 @@ This side project contains the following modules:
 
 ## Environment, Technical Stack and Components
 - Operating System: macOS (Mojave)
-- Development Language: Java (Oracle JDK10)
+- Development Language: Java (Open JDK 11.0.1 GA)
+  - [Download Link](https://jdk.java.net/11/)
 - Web Container: Tomcat (Spring-boot embedded)
 - Application Framework: Spring Boot (2.0.5 RELEASE)
 - Database:
@@ -30,7 +31,18 @@ This side project contains the following modules:
 - CI Service: [Travis CI](https://travis-ci.com/)
 - API Documentation: [Swagger](https://swagger.io/)
 
-## Sample CURL Command
+## Basic Commands
+###### Build Command (Include cucumber integration test.)
+```
+$ mvn clean package -Pintegration
+```
+
+###### Launch the Service
+```
+$ mvn spring-boot:run
+```
+
+## Sample CURL Commands
 ###### Create User
 ```
 $ curl -v -H "Content-Type:application/json" -X POST "http://localhost:8080/the-crud/api/v1/users" -d '{"username":"rabido1022","password":"!QAZ2wsx","firstName":"Rabido","lastName":"JOJO","birthday":"1988-10-22T09:15:01","age":30,"gender":"MALE","registrationDate":"2019-01-03T23:15:01","test":false,"admin":true,"suspended":false,"vip":true}' | python -m json.tool
@@ -53,9 +65,6 @@ $ curl -v -X GET "http://localhost:8080/the-crud/api/v1/users?isVip=true&firstNa
 $ curl -v -X DELETE "http://localhost:8080/the-crud/api/v1/users/23" | python -m json.tool
 ```
 
-## Swagger UI Link
+## Swagger UI Links
 - [Default Link](http://localhost:8080/the-crud/swagger-ui.html#/)
 - [Customized Link](http://localhost:8080/the-crud/docs)
-
-## API Design Document
-- TBD
