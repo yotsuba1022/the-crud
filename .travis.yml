@@ -3,10 +3,10 @@ sudo: false
 
 branches:
   only:
-  - master
+    - master
 
 jdk:
-- openjdk10
+  - openjdk11
 
 install: true
 script: mvn clean test
