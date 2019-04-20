@@ -1,8 +1,9 @@
 package idv.clu.the.crud.module.user.service;
 
 import idv.clu.the.crud.module.user.model.User;
-import idv.clu.the.crud.module.user.repository.UserQueryCriteria;
-import idv.clu.the.crud.module.user.repository.UserRepository;
+import idv.clu.the.crud.module.user.repository.product.ProductRepository;
+import idv.clu.the.crud.module.user.repository.user.UserQueryCriteria;
+import idv.clu.the.crud.module.user.repository.user.UserRepository;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,15 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final ProductRepository productRepository;
     private final BasicPasswordEncryptor passwordEncryptor;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
-    public UserServiceImpl(final UserRepository userRepository, final BasicPasswordEncryptor passwordEncryptor) {
+    public UserServiceImpl(final UserRepository userRepository, final ProductRepository productRepository,
+            final BasicPasswordEncryptor passwordEncryptor) {
         this.userRepository = userRepository;
+        this.productRepository = productRepository;
         this.passwordEncryptor = passwordEncryptor;
     }
 
@@ -36,6 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getById(long id) {
+        User user = productRepository.getById(id);
         return userRepository.getById(id);
     }
 

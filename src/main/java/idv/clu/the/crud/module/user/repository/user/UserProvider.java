@@ -1,4 +1,4 @@
-package idv.clu.the.crud.module.user.repository;
+package idv.clu.the.crud.module.user.repository.user;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.jdbc.SQL;

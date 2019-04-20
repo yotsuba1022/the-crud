@@ -1,7 +1,12 @@
 package idv.clu.the.crud.module.user.repository;
 
+import idv.clu.the.crud.TheCrudApplication;
+import idv.clu.the.crud.bdd.cucumber.config.ProductDataSourceConfig;
+import idv.clu.the.crud.bdd.cucumber.config.UserDatasourceConfig;
 import idv.clu.the.crud.module.user.model.Gender;
 import idv.clu.the.crud.module.user.model.User;
+import idv.clu.the.crud.module.user.repository.user.UserQueryCriteria;
+import idv.clu.the.crud.module.user.repository.user.UserRepository;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +19,8 @@ import java.time.LocalDateTime;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(classes = {TheCrudApplication.class, UserDatasourceConfig.class,
+        ProductDataSourceConfig.class}, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class UserRepositoryTest {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")

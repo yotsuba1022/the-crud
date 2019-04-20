@@ -3,7 +3,7 @@ package idv.clu.the.crud.module.user.controller;
 import idv.clu.the.crud.module.user.dto.UpdateUserDto;
 import idv.clu.the.crud.module.user.dto.UserDto;
 import idv.clu.the.crud.module.user.model.User;
-import idv.clu.the.crud.module.user.repository.UserQueryCriteria;
+import idv.clu.the.crud.module.user.repository.user.UserQueryCriteria;
 import idv.clu.the.crud.module.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

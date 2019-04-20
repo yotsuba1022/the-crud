@@ -1,4 +1,4 @@
-package idv.clu.the.crud.module.user.repository;
+package idv.clu.the.crud.module.user.repository.user;
 
 import idv.clu.the.crud.module.user.model.Gender;
 import lombok.Data;

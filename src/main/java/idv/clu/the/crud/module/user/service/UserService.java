@@ -1,7 +1,7 @@
 package idv.clu.the.crud.module.user.service;
 
 import idv.clu.the.crud.module.user.model.User;
-import idv.clu.the.crud.module.user.repository.UserQueryCriteria;
+import idv.clu.the.crud.module.user.repository.user.UserQueryCriteria;
 
 import java.util.List;
 
