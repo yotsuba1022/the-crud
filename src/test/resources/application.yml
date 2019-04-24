@@ -1,0 +1,46 @@
+# Test environment properties
+
+server:
+  servlet:
+    contextPath: /the-crud
+
+# Logging level configuration:
+logging:
+  level:
+    idv:
+      clu:
+        the:
+          crud:
+            bdd: DEBUG
+            module:
+              user:
+                repository: DEBUG
+
+# H2 related properties:
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    platform: h2
+    schema: classpath:database/schema.sql
+    sql-script-encoding: UTF-8
+    url: jdbc:h2:mem:test;MODE=MySQL;DB_CLOSE_DELAY=-1
+  # Jackson related configuration:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+# Mybatis related properties:
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+# Encryption related setting:
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    keyObtentionIterations: 1000
+    password: ruruguruguru
+    poolSize: 1
+    providerName: SunJCE
+    saltGeneratorClassname: org.jasypt.salt.RandomSaltGenerator
+    stringOutputType: base64

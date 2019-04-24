@@ -1,0 +1,54 @@
+# Development environment properties
+
+server:
+  servlet:
+    contextPath: /the-crud
+
+# Spring actuator related properties:
+management:
+  endpoint:
+    beans:
+      enabled: true
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+# Logging level configuration:
+logging:
+  level:
+    idv:
+      clu:
+        the:
+          crud:
+            module: INFO
+
+# MySQL related properties:
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/the_crud?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true
+    username: root
+    password: Carladmin
+  # Jackson related configuration:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+# Mybatis related properties:
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+# Encryption related setting:
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    keyObtentionIterations: 1000
+    password: ruruguruguru
+    poolSize: 1
+    providerName: SunJCE
+    saltGeneratorClassname: org.jasypt.salt.RandomSaltGenerator
+    stringOutputType: base64
