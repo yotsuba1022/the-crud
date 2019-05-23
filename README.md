@@ -14,8 +14,8 @@ This side project contains the following modules:
 
 ## Environment, Technical Stack and Components
 - Operating System: macOS (Mojave)
-- Development Language: Java (Open JDK 11.0.1 GA)
-  - [Download Link](https://jdk.java.net/11/)
+- Development Language: Java (Amazon Corretto - 11.0.3.7.1)
+  - [Download Link](https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html)
 - Web Container: Tomcat (Spring-boot embedded)
 - Application Framework: Spring Boot (2.0.5 RELEASE)
 - Database:
