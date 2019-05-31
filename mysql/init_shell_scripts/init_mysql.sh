@@ -1,0 +1,5 @@
+mysql -uroot -p$MYSQL_ROOT_PASSWORD << EOF
+source $WORK_PATH/$INIT_DB_SQL;
+source $WORK_PATH/$INIT_TABLE_SQL;
+source $WORK_PATH/$INIT_USER_SQL;
+EOF

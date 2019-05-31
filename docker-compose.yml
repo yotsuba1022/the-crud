@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+  mysql:
+    build: mysql/
+    container_name: the_crud_mysql
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/etc/my.cnf:/etc/mysql/my.cnf:ro
+    environment:
+      - MYSQL_ROOT_PASSWORD=root123
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 1
+
+  app:
+    build: app/
+    container_name: the_crud_webapp
+    working_dir: /app
+    volumes:
+      - ./app:/app
+      - ~/.m2:/root/.m2
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_HOST=mysql
+    command: mvn clean test spring-boot:run -Dspring-boot.run.profiles=container
+    depends_on:
+      - mysql

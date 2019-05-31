@@ -1,4 +1,18 @@
 # Development environment properties
+spring:
+  application:
+    name: the-crud
+  profiles:
+    active: dev
+  # MySQL related properties:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root123
+  # Jackson related configuration:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
 
 server:
   servlet:
@@ -25,18 +39,6 @@ logging:
           crud:
             module: INFO
 
-# MySQL related properties:
-spring:
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/the_crud?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true
-    username: root
-    password: Carladmin
-  # Jackson related configuration:
-  jackson:
-    serialization:
-      write-dates-as-timestamps: false
-
 # Mybatis related properties:
 mybatis:
   configuration:
@@ -52,3 +54,15 @@ jasypt:
     providerName: SunJCE
     saltGeneratorClassname: org.jasypt.salt.RandomSaltGenerator
     stringOutputType: base64
+
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/the_crud?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true
+
+---
+spring:
+  profiles: container
+  datasource:
+    url: jdbc:mysql://mysql:3306/the_crud?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true

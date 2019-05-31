@@ -14,6 +14,7 @@ This side project contains the following modules:
 
 ## Environment, Technical Stack and Components
 - Operating System: macOS (Mojave)
+- Container Platform: Docker (18.09.2)
 - Development Language: Java (Amazon Corretto - 11.0.3.7.1)
   - [Download Link](https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html)
 - Web Container: Tomcat (Spring-boot embedded)
@@ -31,16 +32,32 @@ This side project contains the following modules:
 - CI Service: [Travis CI](https://travis-ci.com/)
 - API Documentation: [Swagger](https://swagger.io/)
 
-## Basic Commands
-###### Build Command (Include cucumber integration test.)
-```
-$ mvn clean package -Pintegration
-```
+## Setup Commands for Docker Environment
+Before executing the commands in this block, please ensure that you already installed docker on your local machine.
 
-###### Launch the Service
-```
-$ mvn spring-boot:run
-```
+1. Clone this repository with the following command:
+    ```
+    git@github.com:yotsuba1022/the-curd.git
+    ``` 
+2. Move into the root path of the project you cloned.
+
+3. Execute the following command.
+    ```
+    $ docker-compose up -d
+    ```
+
+## Setup Commands for Local Environment
+Before executing the commands in this block, please ensure that you already installed all required components in your computer (e.g. MySQL).
+
+1. Compile, build and test the Spring Boot application:
+    ```
+    $ mvn clean test package -Pintegration
+    ```
+
+2. Launch the service:
+    ```
+    $ mvn spring-boot:run
+    ```
 
 ## Sample CURL Commands
 ###### Create User
