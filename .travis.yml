@@ -9,5 +9,7 @@ jdk:
   - openjdk11
 
 install: true
+
+before_script: cd app
 script: mvn clean test
 
