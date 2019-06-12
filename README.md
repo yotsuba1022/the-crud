@@ -35,7 +35,7 @@ Before executing the commands in this block, please ensure that you already inst
 
 1. Clone this repository with the following command:
     ```
-    https://github.com/yotsuba1022/the-curd.git
+    https://github.com/yotsuba1022/the-crud.git
     ``` 
 2. Move into the root path of the project you cloned.
 
