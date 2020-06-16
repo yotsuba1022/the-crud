@@ -39,13 +39,25 @@ Before executing the commands in this block, please ensure that you already inst
     ``` 
 2. Move into the root path of the project you cloned.
 
-3. Execute the following command.
+3. Execute the following command to build image then start containers.
+
+   3.1. If you want to run containers as usual processes, execute the following command:
     ```
-    $ docker-compose up -d
+     $ docker-compose up --build
+    ```
+   3.2. If you want to run containers as daemon processes, execute the following command:
+    ```
+     $ docker-compose up --build -d
+    ```
+        
+4. Fnish all containers by the following command when you want to shut down all of them:
+        
+    ```
+     $ docker-compose down
     ```
 
 ## Setup Commands for Local Environment
-Before executing the commands in this block, please ensure that you already installed all required components in your computer (e.g. MySQL).
+Before executing the commands in this block, please ensure that you already installed and launched all the required components in your computer (e.g. MySQL).
 
 1. Compile, build and test the Spring Boot application:
     ```
