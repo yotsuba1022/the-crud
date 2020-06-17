@@ -39,17 +39,16 @@ Before executing the commands in this block, please ensure that you already inst
     ``` 
 2. Move into the root path of the project you cloned.
 
-3. Execute the following command to build image then start containers.
-
-   3.1. If you want to run containers as usual processes, execute the following command:
+3. Execute the following command to build image then start all containers as daemon process.
     ```
-     $ docker-compose up --build
+     $ docker-compose down; docker-compose up --build -d; docker rmi $(docker images -q -f "dangling=true" -f "label=autodelete=true");
     ```
-   3.2. If you want to run containers as daemon processes, execute the following command:
+       
+    3.1 The last part of the above command:
     ```
-     $ docker-compose up --build -d
+     $ docker rmi $(docker images -q -f "dangling=true" -f "label=autodelete=true") 
     ```
-        
+      - Means that to remove all intermediate/dangling images.
 4. Fnish all containers by the following command when you want to shut down all of them:
         
     ```
