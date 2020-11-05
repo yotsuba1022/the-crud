@@ -1,5 +1,5 @@
 # The CRUD
-[![Build Status](https://travis-ci.com/yotsuba1022/the-curd.svg?branch=master)](https://travis-ci.com/yotsuba1022/the-curd)
+[![Build Status](https://travis-ci.com/yotsuba1022/the-crud.svg?branch=master)](https://travis-ci.com/yotsuba1022/the-crud)
 [![Hex.pm](https://img.shields.io/badge/language-java-blue.svg)]()
 [![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)]()
 
@@ -18,7 +18,7 @@ This side project contains the following modules:
 - Web Container: Tomcat (Spring-boot embedded)
 - Application Framework: Spring Boot (2.0.5 RELEASE)
 - Database:
-    - MySQL (8.0.12)
+    - MySQL (8.0.20)
     - H2 (For test purpose only)
 - Persistence layer: [MyBatis](http://www.mybatis.org/mybatis-3/) (3.4.6)
 - Cryptography: [Jasypt](http://www.jasypt.org/) (2.0.0)
