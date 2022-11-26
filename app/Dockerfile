@@ -19,7 +19,7 @@ RUN mvn clean test package
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
 ## Stage 2: The minimal docker image with command to run the application
-FROM openjdk:11-jdk-slim as app_execution
+FROM amazoncorretto:11 as app_execution
 
 ARG DEPENDENCY=/app/target/dependency
 
