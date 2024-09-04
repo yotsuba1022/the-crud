@@ -1,5 +1,5 @@
 # Use mysql:latest as the basic image
-FROM mysql:latest
+FROM mysql:8.0.33
 
 # Author
 MAINTAINER clu <yotsuba1022@gmail.com>
