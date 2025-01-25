@@ -1,0 +1,19 @@
+meta {
+  name: 7_delete_user
+  type: http
+  seq: 7
+}
+
+delete {
+  url: {{hostname}}/the-crud/api/v1/users/{{createdId}}
+  body: none
+  auth: none
+}
+
+tests {
+  test("should return 204", function() {
+    let resp = res.getBody();
+    expect(res.getStatus()).to.equal(204);
+  });
+  
+}

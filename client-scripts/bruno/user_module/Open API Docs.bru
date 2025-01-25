@@ -1,0 +1,17 @@
+meta {
+  name: Open API Docs
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{hostname}}/the-crud/v3/api-docs
+  body: none
+  auth: none
+}
+
+tests {
+  test("should return 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+}

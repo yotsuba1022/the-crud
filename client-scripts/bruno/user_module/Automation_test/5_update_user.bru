@@ -1,0 +1,32 @@
+meta {
+  name: 5_update_user
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{hostname}}/the-crud/api/v1/users/{{createdId}}
+  body: json
+  auth: none
+}
+
+headers {
+  content-type: application/json
+}
+
+body:json {
+  {
+    "firstName": "Natalie",
+    "lastName": "Lee",
+    "age": {{updatedAge}},
+    "gender": "FEMALE"
+  }
+}
+
+tests {
+  test("should return 200", function() {
+    let resp = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+}

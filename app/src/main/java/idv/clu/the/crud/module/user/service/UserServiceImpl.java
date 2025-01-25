@@ -50,8 +50,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public long softDelete(long id) {
+        return userRepository.softDelete(id);
+    }
+
+    @Override
     public long delete(long id) {
         return userRepository.delete(id);
+    }
+
+    @Override
+    public long getLastUserId() {
+        Long lastUserId = userRepository.getLastUserId();
+        return lastUserId == null ? 0 : lastUserId;
     }
 
 }

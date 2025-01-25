@@ -1,0 +1,22 @@
+meta {
+  name: 4_get_user_by_existing_id
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{hostname}}/the-crud/api/v1/users/{{createdId}}
+  body: none
+  auth: none
+}
+
+tests {
+  test("should return 200", function() {
+    let resp = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+    let expectedId = bru.getEnvVar("createdId");
+    expect(res.getBody().id).to.equal(expectedId);
+  });
+  
+  
+}

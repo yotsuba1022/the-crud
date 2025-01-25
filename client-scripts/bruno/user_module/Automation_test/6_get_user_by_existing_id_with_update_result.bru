@@ -1,0 +1,23 @@
+meta {
+  name: 6_get_user_by_existing_id_with_update_result
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{hostname}}/the-crud/api/v1/users/{{createdId}}
+  body: none
+  auth: none
+}
+
+tests {
+  test("should return 200", function() {
+    let resp = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+    let expectedId = bru.getEnvVar("createdId");
+    expect(res.getBody().id).to.equal(expectedId);
+    let expectedAge = Number(bru.getEnvVar("updatedAge"));
+    expect(res.getBody().age).to.equals(expectedAge);
+  });
+  
+}

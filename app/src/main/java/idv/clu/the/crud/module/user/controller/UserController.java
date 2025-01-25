@@ -45,7 +45,8 @@ public class UserController {
     @PostMapping
     public ResponseEntity<Long> create(@RequestBody @Valid final UserDto userDto) {
         final User user = User.from(userDto);
-        return new ResponseEntity<>(this.userService.create(user), HttpStatus.CREATED);
+        this.userService.create(user);
+        return new ResponseEntity<>(user.getId(), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Update User", description = "Update specific user with provided information.")
@@ -59,54 +60,62 @@ public class UserController {
     @Operation(summary = "Delete User", description = "Delete specific user by user ID.")
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
-        this.userService.delete(id);
+        this.userService.softDelete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Operation(summary = "Get User", description = "Get specific user by user ID.")
     @GetMapping(path = "/{id}")
     public ResponseEntity<UserDto> getById(@PathVariable long id) {
-        return new ResponseEntity<>(UserDto.of(this.userService.getById(id)), HttpStatus.OK);
+        var user = this.userService.getById(id);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(UserDto.of(user), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get Last User ID", description = "Get the last user ID.")
+    @GetMapping(path = "/lastUserId")
+    public ResponseEntity<Long> getLastUserId() {
+        return new ResponseEntity<>(this.userService.getLastUserId(), HttpStatus.OK);
     }
 
     @Operation(summary = "Query Users", description = "Query user records by query criteria parameters.")
     @GetMapping
-    public ResponseEntity<List<UserDto>> getByQuery(@RequestParam(value = "id", required = false) final Long id,
-                                                    @RequestParam(value = "username", required = false)
-                                                    final String username,
-                                                    @RequestParam(value = "firstName", required = false)
-                                                    final String firstName,
-                                                    @RequestParam(value = "lastName", required = false)
-                                                    final String lastName,
-                                                    @RequestParam(value = "age", required = false) final Integer age,
-                                                    @RequestParam(value = "gender", required = false)
-                                                    final String gender,
-                                                    @RequestParam(value = "isVip", required = false, defaultValue =
-                                                            "false")
-                                                    final String isVip,
-                                                    @RequestParam(value = "orderBy", required = false, defaultValue =
-                                                            "id")
-                                                    final String orderBy,
-                                                    @RequestParam(value = "isDesc", required = false, defaultValue =
-                                                            "true")
-                                                    final String isDesc,
-                                                    @RequestParam(value = "limit", required = false, defaultValue =
-                                                            "10")
-                                                    final String limit,
-                                                    @RequestParam(value = "offset", required = false, defaultValue =
-                                                            "0")
-                                                    final String offset) {
+    public ResponseEntity<List<UserDto>> getByQuery(
+            @RequestParam(value = "id", required = false) final Long id,
+            @RequestParam(value = "username", required = false)
+            final String username,
+            @RequestParam(value = "firstName", required = false)
+            final String firstName,
+            @RequestParam(value = "lastName", required = false)
+            final String lastName,
+            @RequestParam(value = "age", required = false) final Integer age,
+            @RequestParam(value = "gender", required = false)
+            final String gender,
+            @RequestParam(value = "isVip", required = false, defaultValue = "false")
+            final String isVip,
+            @RequestParam(value = "orderBy", required = false, defaultValue = "id")
+            final String orderBy,
+            @RequestParam(value = "isDesc", required = false, defaultValue = "true")
+            final String isDesc,
+            @RequestParam(value = "limit", required = false, defaultValue = "10")
+            final String limit,
+            @RequestParam(value = "offset", required = false, defaultValue = "0")
+            final String offset
+    ) {
         final UserQueryCriteria queryCriteria = new UserQueryCriteria.Builder().setId(id)
                 .setUsername(username)
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .setAge(age)
                 .setGender(gender)
-                .isVip(Boolean.valueOf(isVip))
+                .isVip(Boolean.parseBoolean(isVip))
                 .setOrderBy(orderBy)
-                .isDesc(Boolean.valueOf(isDesc))
+                .isDesc(Boolean.parseBoolean(isDesc))
                 .setLimit(limit)
                 .setOffset(offset)
+                .isDeleted(false)
                 .build();
 
         final List<User> users = this.userService.getByQueryCriteria(queryCriteria);

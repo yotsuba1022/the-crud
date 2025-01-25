@@ -1,0 +1,43 @@
+meta {
+  name: 3_create_user
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{hostname}}/the-crud/api/v1/users
+  body: json
+  auth: none
+}
+
+headers {
+  content-type: application/json
+}
+
+body:json {
+  {
+    "username": "user_{{createdId}}",
+    "password": "!QAZ2wsx",
+    "firstName": "Natalie",
+    "lastName": "Lee",
+    "birthday": "1988-12-10T09:15:01",
+    "age": 30,
+    "gender": "FEMALE",
+    "registrationDate": "2025-01-25T18:50:01",
+    "test": false,
+    "admin": true,
+    "suspended": false,
+    "vip": true
+  }
+}
+
+tests {
+  test("should return 201", function() {
+    expect(res.getStatus()).to.equal(201);
+  });
+  
+  test("should be able to extract createdId", function() {
+    let createdId = res.getBody();
+    bru.setEnvVar("createdId", createdId);
+  });
+}

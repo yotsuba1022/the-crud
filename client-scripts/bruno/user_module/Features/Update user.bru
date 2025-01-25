@@ -1,0 +1,19 @@
+meta {
+  name: Update user
+  type: http
+  seq: 3
+}
+
+put {
+  url: http://localhost:8080/the-crud/api/v1/users/1
+  body: json
+  auth: none
+}
+
+headers {
+  content-type: application/json
+}
+
+body:json {
+  {"firstName":"Rabido","lastName":"Lu","birthday":"1988-10-22T09:15:01","age":36,"gender":"MALE","test":false,"admin":true,"suspended":false}
+}

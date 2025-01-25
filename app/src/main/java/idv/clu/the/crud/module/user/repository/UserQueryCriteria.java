@@ -23,6 +23,7 @@ public class UserQueryCriteria {
     private boolean isDesc;
     private String limit;
     private String offset;
+    private boolean isDeleted;
 
     private UserQueryCriteria(final Builder builder) {
         this.id = builder.id;
@@ -36,6 +37,7 @@ public class UserQueryCriteria {
         this.isDesc = builder.isDesc;
         this.limit = builder.limit;
         this.offset = builder.offset;
+        this.isDeleted = builder.isDeleted;
     }
 
     public static class Builder {
@@ -51,6 +53,7 @@ public class UserQueryCriteria {
         private boolean isDesc;
         private String limit;
         private String offset;
+        private boolean isDeleted;
 
         public UserQueryCriteria build() {
             return new UserQueryCriteria(this);
@@ -117,6 +120,11 @@ public class UserQueryCriteria {
 
         public Builder setOffset(String offset) {
             this.offset = offset;
+            return this;
+        }
+
+        public Builder isDeleted(boolean deleted) {
+            isDeleted = deleted;
             return this;
         }
 

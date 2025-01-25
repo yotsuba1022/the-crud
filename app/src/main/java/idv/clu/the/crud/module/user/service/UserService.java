@@ -20,6 +20,10 @@ public interface UserService {
 
     long update(User user);
 
+    long softDelete(long id);
+
     long delete(long id);
+
+    long getLastUserId();
 
 }

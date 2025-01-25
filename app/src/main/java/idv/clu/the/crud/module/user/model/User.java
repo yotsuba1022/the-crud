@@ -33,6 +33,7 @@ public class User {
     private boolean isVip;
     private boolean isTest;
     private boolean isSuspended;
+    private boolean isDeleted;
 
     /**
      * Creates a User from a UserDto.

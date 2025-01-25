@@ -13,5 +13,6 @@ CREATE TABLE IF NOT EXISTS USERS (
     is_admin BOOLEAN NOT NULL,
     is_vip BOOLEAN NOT NULL,
     is_test BOOLEAN NOT NULL,
-    is_suspended BOOLEAN NOT NULL
+    is_suspended BOOLEAN NOT NULL,
+    is_deleted BOOLEAN NOT NULL
 );

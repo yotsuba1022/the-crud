@@ -1,0 +1,22 @@
+meta {
+  name: 1_get_last_user_id
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{hostname}}/the-crud/api/v1/users/lastUserId
+  body: none
+  auth: none
+}
+
+tests {
+  test("should return 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+  test("should be able to extract last user ID", function() {
+    let lastUserId = Number(res.getBody());
+    bru.setEnvVar("createdId", lastUserId + 1);
+  });
+}
