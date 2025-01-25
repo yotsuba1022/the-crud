@@ -89,6 +89,24 @@ $ curl -v -X GET "http://localhost:8080/the-crud/api/v1/users?isVip=true&firstNa
 $ curl -v -X DELETE "http://localhost:8080/the-crud/api/v1/users/23"
 ```
 
+## Automation Test Scripts
+### Bruno Collections
+- Please refer to the Bruno collection under `the-crud/client-scripts/bruno` folder, the RESTful collections will be arranged by modules.
+### Current modules
+  | Module Name |
+  |-------------|
+  | user_module |
+
+### How to Perform the Automation Test?
+- Launch the whole app environment via docker compose and make sure it works as expected.
+- Download bruno from the [official site](https://www.usebruno.com/) (It's free and will not expose your data in the could).
+- Import the test module you want to try.
+- Move to the automation test folder under the bruno module, click the option menu of the test, then choose "Run".
+  - <img src="https://github.com/user-attachments/assets/38b95564-d085-4464-aa0b-c44feb196e0a" width=30% height=30%>
+- Adjust the test parameters according to your needs, then click "Run".
+  - <img src="https://github.com/user-attachments/assets/e57f3a9d-3a59-4c01-a391-9e6f9fd9a428" width=70% height=70%>
+- Then, you should be able to see the result.
+
 ## Swagger UI Links
 - [Default Link](http://localhost:8080/the-crud/swagger-ui.html#/)
 - [Customized Link](http://localhost:8080/the-crud/docs)
