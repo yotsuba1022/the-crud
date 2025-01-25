@@ -5,8 +5,8 @@ import idv.clu.the.crud.module.user.dto.UserDto;
 import idv.clu.the.crud.module.user.model.User;
 import idv.clu.the.crud.module.user.repository.UserQueryCriteria;
 import idv.clu.the.crud.module.user.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * <p>
  * User API controller.
  */
-@Api(description = "Contract of User Module")
+@Tag(name = "User API", description = "Contract of User Module")
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
@@ -41,14 +41,14 @@ public class UserController {
         this.userService = userService;
     }
 
-    @ApiOperation(value = "Create User", notes = "Create a user with necessary information.")
+    @Operation(summary = "Create User", description = "Create a user with necessary information.")
     @PostMapping
     public ResponseEntity<Long> create(@RequestBody @Valid final UserDto userDto) {
         final User user = User.from(userDto);
         return new ResponseEntity<>(this.userService.create(user), HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "Update User", notes = "Update specific user with provided information.")
+    @Operation(summary = "Update User", description = "Update specific user with provided information.")
     @PutMapping(path = "/{id}")
     public ResponseEntity<Long> update(@PathVariable long id, @RequestBody @Valid final UpdateUserDto updateUserDto) {
         final User updatedUser = this.userService.getById(id).updateBy(updateUserDto);
@@ -56,20 +56,20 @@ public class UserController {
         return new ResponseEntity<>(updatedUser.getId(), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Delete User", notes = "Delete specific user by user ID.")
+    @Operation(summary = "Delete User", description = "Delete specific user by user ID.")
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
         this.userService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation(value = "Get User", notes = "Get specific user by user ID.")
+    @Operation(summary = "Get User", description = "Get specific user by user ID.")
     @GetMapping(path = "/{id}")
     public ResponseEntity<UserDto> getById(@PathVariable long id) {
         return new ResponseEntity<>(UserDto.of(this.userService.getById(id)), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Query Users", notes = "Query user records by query criteria parameters.")
+    @Operation(summary = "Query Users", description = "Query user records by query criteria parameters.")
     @GetMapping
     public ResponseEntity<List<UserDto>> getByQuery(@RequestParam(value = "id", required = false) final Long id,
                                                     @RequestParam(value = "username", required = false)

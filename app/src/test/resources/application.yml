@@ -16,25 +16,27 @@ logging:
               user:
                 repository: DEBUG
 
-# H2 related properties:
+# H2-related properties:
 spring:
   datasource:
     driver-class-name: org.h2.Driver
-    platform: h2
-    schema: classpath:database/schema.sql
-    sql-script-encoding: UTF-8
     url: jdbc:h2:mem:test;MODE=MySQL;DB_CLOSE_DELAY=-1
-  # Jackson related configuration:
+  # Jackson-related configuration:
   jackson:
     serialization:
       write-dates-as-timestamps: false
+  sql:
+    init:
+      platform: h2
+      schema-locations: classpath:database/schema.sql
+      encoding: UTF-8
 
-# Mybatis related properties:
+# Mybatis related to properties:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
-# Encryption related setting:
+# Encryption-related setting:
 jasypt:
   encryptor:
     algorithm: PBEWithMD5AndDES

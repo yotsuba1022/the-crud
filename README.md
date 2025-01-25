@@ -13,21 +13,17 @@ This side project contains the following modules:
 ## Environment, Technical Stack and Components
 - Operating System: macOS (Mojave)
 - Container Platform: Docker (18.09.2)
-- Development Language: Java (Amazon Corretto - 11.0.3.7.1)
+- Development Language: Java (Amazon Corretto - 17)
   - [Download Link](https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html)
 - Web Container: Tomcat (Spring-boot embedded)
-- Application Framework: Spring Boot (2.0.5 RELEASE)
+- Application Framework: Spring Boot (3.0.5 RELEASE)
 - Database:
     - MySQL (8.0.20)
     - H2 (For test purpose only)
-- Persistence layer: [MyBatis](http://www.mybatis.org/mybatis-3/) (3.4.6)
-- Cryptography: [Jasypt](http://www.jasypt.org/) (2.0.0)
-- HTTP request client: [Unirest](https://github.com/Kong/unirest-java) (1.4.9)
-- Code Generation: [Lombok](https://projectlombok.org/) (1.16.22)
-- Unit Test: [JUnit](https://junit.org/junit5/) (4.12)
-- Behavior Driven Development: [Cucumber](https://cucumber.io/) (1.2.5)
-- Build Tool: [Maven](https://maven.apache.org/) (3.3.3)
-- CI Service: [Travis CI](https://travis-ci.com/)
+- Persistence layer: [MyBatis](http://www.mybatis.org/mybatis-3/) (3.5.17)
+- Cryptography: [Jasypt](http://www.jasypt.org/) (3.0.5)
+- Unit Test: [JUnit](https://junit.org/junit5/) (4.13.2)
+- Build Tool: [Maven](https://maven.apache.org/) (3.9.9)
 - API Documentation: [Swagger](https://swagger.io/)
 
 ## Setup Commands for Docker Environment
@@ -56,11 +52,9 @@ Before executing the commands in this block, please ensure that you already inst
     ```
 
 ## Setup Commands for Local Environment
-Before executing the commands in this block, please ensure that you already installed and launched all the required components in your computer (e.g. MySQL).
-
-1. Compile, build and test the Spring Boot application:
+1. Compile, build, and test the Spring Boot application:
     ```
-    $ mvn clean test package -Pintegration
+    $ mvn clean test package
     ```
 
 2. Launch the service:
@@ -71,24 +65,24 @@ Before executing the commands in this block, please ensure that you already inst
 ## Sample CURL Commands
 ###### Create User
 ```
-$ curl -v -H "Content-Type:application/json" -X POST "http://localhost:8080/the-crud/api/v1/users" -d '{"username":"rabido1022","password":"!QAZ2wsx","firstName":"Rabido","lastName":"JOJO","birthday":"1988-10-22T09:15:01","age":30,"gender":"MALE","registrationDate":"2019-01-03T23:15:01","test":false,"admin":true,"suspended":false,"vip":true}' | python -m json.tool
+$ curl -v -H "Content-Type:application/json" -X POST "http://localhost:8080/the-crud/api/v1/users" -d '{"username":"rabido1022","password":"!QAZ2wsx","firstName":"Rabido","lastName":"JOJO","birthday":"1988-10-22T09:15:01","age":30,"gender":"MALE","registrationDate":"2019-01-03T23:15:01","test":false,"admin":true,"suspended":false,"vip":true}'
 ```
 ###### Update User
 ```
-$ curl -v -H "Content-Type:application/json" -X PUT "http://localhost:8080/the-crud/api/v1/users/26" -d '{"firstName":"JOJO", "lastName":"Lue", "birthday":"1988-10-22T23:15:15", "age":30, "gender":"MALE", "admin":true, "vip":true, "test":true, "suspended":true}' | python -m json.tool
+$ curl -v -H "Content-Type:application/json" -X PUT "http://localhost:8080/the-crud/api/v1/users/26" -d '{"firstName":"JOJO", "lastName":"Lue", "birthday":"1988-10-22T23:15:15", "age":30, "gender":"MALE", "admin":true, "vip":true, "test":true, "suspended":true}'
 ```
 ###### Get User
 ```
-$ curl -v -X GET "http://localhost:8080/the-crud/api/v1/users/1" | python -m json.tool
+$ curl -v -X GET "http://localhost:8080/the-crud/api/v1/users/1"
 ```
 ###### Query Users
 ```
-$ curl -v -X GET "http://localhost:8080/the-crud/api/v1/users?id=1" | python -m json.tool
-$ curl -v -X GET "http://localhost:8080/the-crud/api/v1/users?isVip=true&firstName=Rabido" | python -m json.tool
+$ curl -v -X GET "http://localhost:8080/the-crud/api/v1/users?id=1"
+$ curl -v -X GET "http://localhost:8080/the-crud/api/v1/users?isVip=true&firstName=Rabido"
 ```
 ###### Delete User
 ```
-$ curl -v -X DELETE "http://localhost:8080/the-crud/api/v1/users/23" | python -m json.tool
+$ curl -v -X DELETE "http://localhost:8080/the-crud/api/v1/users/23"
 ```
 
 ## Swagger UI Links

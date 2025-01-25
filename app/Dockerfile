@@ -1,5 +1,5 @@
 ## Stage 1: Build the application
-FROM maven:3.5-jdk-11 as build
+FROM maven:3.9.9-amazoncorretto-17 as build
 # Since this stage will generate an intermediate/dangling images,
 # we can label it so that it will be easier to identify it
 # when we need to remove it right after the container startup.
@@ -19,7 +19,7 @@ RUN mvn clean test package
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
 ## Stage 2: The minimal docker image with command to run the application
-FROM amazoncorretto:11 as app_execution
+FROM amazoncorretto:17 as app_execution
 
 ARG DEPENDENCY=/app/target/dependency
 

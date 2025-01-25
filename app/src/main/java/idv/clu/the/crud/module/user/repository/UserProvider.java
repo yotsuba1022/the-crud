@@ -12,7 +12,7 @@ import org.springframework.util.StringUtils;
 @Slf4j
 public class UserProvider {
 
-    private final static String TABLE_USER = "USER";
+    private final static String TABLE_USER = "USERS";
 
     public String getByQueryCriteria(final UserQueryCriteria queryCriteria) {
         final SQL sql = new SQL().SELECT("*").FROM(TABLE_USER);

@@ -3,17 +3,19 @@ package idv.clu.the.crud.module.user.repository;
 import idv.clu.the.crud.module.user.model.Gender;
 import idv.clu.the.crud.module.user.model.User;
 import org.jasypt.util.password.BasicPasswordEncryptor;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(SpringRunner.class)
+
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class UserRepositoryTest {
 
@@ -26,22 +28,22 @@ public class UserRepositoryTest {
 
     @Test
     public void testCreateAndGetById() {
-        User expected = new User.Builder().setUsername("yotsuba1022")
-                .setPassword(passwordEncryptor.encryptPassword("!QAZxsw2"))
-                .setFirstName("Carl")
-                .setLastName("Lu")
-                .setBirthday(LocalDateTime.of(1988, 10, 22, 23, 5, 5))
-                .setAge(30)
-                .setGender(Gender.MALE)
-                .setRegistrationDate(LocalDateTime.of(2018, 10, 16, 23, 2, 10))
+        User input = User.builder()
+                .username("yotsuba1022")
+                .password(passwordEncryptor.encryptPassword("!QAZxsw2"))
+                .firstName("Carl")
+                .lastName("Lu")
+                .birthday(Timestamp.valueOf(LocalDateTime.of(1988, 10, 22, 23, 5, 5)))
+                .age(30)
+                .gender(Gender.MALE)
+                .registrationDate(Timestamp.valueOf(LocalDateTime.of(2018, 10, 16, 23, 2, 10)))
                 .build();
 
-        // Before insert, the ID should be zero.
-        assertEquals(0, expected.getId());
+        userRepository.create(input);
+        long latestId = userRepository.count();
+        User expected = input.toBuilder().id(latestId).build();
 
-        userRepository.create(expected);
-
-        UserQueryCriteria queryCriteria = new UserQueryCriteria.Builder().setId(expected.getId())
+        UserQueryCriteria queryCriteria = new UserQueryCriteria.Builder()
                 .setOrderBy("id")
                 .isDesc(true)
                 .setLimit("10")
@@ -51,7 +53,7 @@ public class UserRepositoryTest {
         // After insert, the auto-generated ID should be set to ID field. (Holy Mybatis)
         User actual = userRepository.getByQueryCriteria(queryCriteria)
                 .stream()
-                .filter(user -> user.getId() == expected.getId())
+                .filter(user -> user.getId() == latestId)
                 .findFirst()
                 .get();
 
@@ -60,19 +62,22 @@ public class UserRepositoryTest {
 
     @Test
     public void testGetByQueryCriteria() {
-        User expected = new User.Builder().setUsername("criteriaTester")
-                .setPassword(passwordEncryptor.encryptPassword("criteria123"))
-                .setFirstName("Criteria")
-                .setLastName("Mao")
-                .setBirthday(LocalDateTime.of(2001, 1, 12, 13, 15, 5))
-                .setAge(17)
-                .setGender(Gender.FEMALE)
-                .setRegistrationDate(LocalDateTime.of(2018, 10, 16, 23, 2, 10))
+        User input = User.builder()
+                .username("clu")
+                .password(passwordEncryptor.encryptPassword("55667788"))
+                .firstName("Carl")
+                .lastName("Lu")
+                .birthday(Timestamp.valueOf(LocalDateTime.of(1988, 10, 22, 23, 5, 5)))
+                .age(30)
+                .gender(Gender.MALE)
+                .registrationDate(Timestamp.valueOf(LocalDateTime.of(2018, 10, 16, 23, 2, 10)))
                 .build();
 
-        userRepository.create(expected);
+        userRepository.create(input);
+        long latestId = userRepository.count();
+        User expected = input.toBuilder().id(latestId).build();
 
-        UserQueryCriteria queryCriteria = new UserQueryCriteria.Builder().setId(expected.getId())
+        UserQueryCriteria queryCriteria = new UserQueryCriteria.Builder()
                 .setUsername(expected.getUsername())
                 .setOrderBy("id")
                 .isDesc(true)

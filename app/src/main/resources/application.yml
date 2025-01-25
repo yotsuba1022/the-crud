@@ -4,12 +4,12 @@ spring:
     name: the-crud
   profiles:
     active: dev
-  # MySQL related properties:
+  # MySQL-related properties:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: root123
-  # Jackson related configuration:
+  # Jackson-related configuration:
   jackson:
     serialization:
       write-dates-as-timestamps: false
@@ -18,7 +18,7 @@ server:
   servlet:
     contextPath: /the-crud
 
-# Spring actuator related properties:
+# Spring actuator-related properties:
 management:
   endpoint:
     beans:
@@ -44,7 +44,7 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
-# Encryption related setting:
+# Encryption-related setting:
 jasypt:
   encryptor:
     algorithm: PBEWithMD5AndDES
@@ -55,14 +55,26 @@ jasypt:
     saltGeneratorClassname: org.jasypt.salt.RandomSaltGenerator
     stringOutputType: base64
 
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
 ---
 spring:
-  profiles: dev
+  config:
+    activate:
+      on-profile: dev
   datasource:
     url: jdbc:mysql://localhost:3306/the_crud?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true
 
 ---
 spring:
-  profiles: container
+  config:
+    activate:
+      on-profile: container
   datasource:
     url: jdbc:mysql://mysql:3306/the_crud?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true
