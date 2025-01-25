@@ -32,7 +32,7 @@
         <mybatis-spring-boot.version>3.0.4</mybatis-spring-boot.version>
         <jasypt.version>3.0.5</jasypt.version>
         <commons-io.version>2.14.0</commons-io.version>
-        <org.springdoc.version>2.0.4</org.springdoc.version>
+        <org.springdoc.version>2.7.0</org.springdoc.version>
     </properties>
 
     <dependencyManagement>

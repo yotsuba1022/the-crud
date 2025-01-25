@@ -45,7 +45,7 @@ public class UserProvider {
     }
 
     private void constructStringTypeQueryParameter(final SQL sql, final String strValue, final String query) {
-        if (!StringUtils.isEmpty(strValue)) {
+        if (StringUtils.hasText(strValue)) {
             sql.WHERE(query);
         }
     }

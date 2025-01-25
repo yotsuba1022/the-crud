@@ -60,11 +60,11 @@ public class User {
      * Updates the current User based on an UpdateUserDto.
      */
     public User updateBy(UpdateUserDto updateUserDto) {
-        if (!StringUtils.isEmpty(updateUserDto.getFirstName())) {
+        if (StringUtils.hasText(updateUserDto.getFirstName())) {
             this.setFirstName(updateUserDto.getFirstName());
         }
 
-        if (!StringUtils.isEmpty(updateUserDto.getLastName())) {
+        if (StringUtils.hasText(updateUserDto.getLastName())) {
             this.setLastName(updateUserDto.getLastName());
         }
 

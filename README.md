@@ -1,5 +1,4 @@
 # The CRUD
-[![Build Status](https://travis-ci.com/yotsuba1022/the-crud.svg?branch=master)](https://travis-ci.com/yotsuba1022/the-crud)
 [![Hex.pm](https://img.shields.io/badge/language-java-blue.svg)]()
 [![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)]()
 
@@ -22,7 +21,7 @@ This side project contains the following modules:
     - H2 (For test purpose only)
 - Persistence layer: [MyBatis](http://www.mybatis.org/mybatis-3/) (3.5.17)
 - Cryptography: [Jasypt](http://www.jasypt.org/) (3.0.5)
-- Unit Test: [JUnit](https://junit.org/junit5/) (4.13.2)
+- Unit Test: [JUnit](https://junit.org/junit5/) (jupiter)
 - Build Tool: [Maven](https://maven.apache.org/) (3.9.9)
 - API Documentation: [Swagger](https://swagger.io/)
 
@@ -40,7 +39,7 @@ Before executing the commands in this block, please ensure that you already inst
      $ docker-compose down; docker-compose up --build -d; docker rmi $(docker images -q -f "dangling=true" -f "label=autodelete=true");
     ```
        
-    3.1 The last part of the above command:
+    3.1 The last part of the preceding command:
     ```
      $ docker rmi $(docker images -q -f "dangling=true" -f "label=autodelete=true") 
     ```
@@ -50,9 +49,14 @@ Before executing the commands in this block, please ensure that you already inst
     ```
      $ docker-compose down
     ```
+5. Remember to clean up the MySQL data folder with cleanup-mysql-data.sh (not mandatory)
+
+    ```
+     $ sh cleanup-mysql-data.sh
+    ```
 
 ## Setup Commands for Local Environment
-1. Compile, build, and test the Spring Boot application:
+1. Compile, build, and test the Spring Boot app:
     ```
     $ mvn clean test package
     ```

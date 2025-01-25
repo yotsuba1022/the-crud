@@ -22,9 +22,9 @@ server:
 management:
   endpoint:
     beans:
-      enabled: true
+      access: unrestricted
     env:
-      enabled: true
+      access: unrestricted
   endpoints:
     web:
       exposure:
@@ -58,10 +58,11 @@ jasypt:
 springdoc:
   api-docs:
     enabled: true
-    path: /api-docs
+    path: /v3/api-docs
   swagger-ui:
     enabled: true
     path: /swagger-ui.html
+  writer-with-default-pretty-printer: true
 
 ---
 spring:

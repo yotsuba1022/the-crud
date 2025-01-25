@@ -88,7 +88,7 @@ public class UserQueryCriteria {
         }
 
         public Builder setGender(String genderStr) {
-            if (!StringUtils.isEmpty(genderStr)) {
+            if (StringUtils.hasText(genderStr)) {
                 Gender gender = Gender.from(genderStr);
                 this.gender = gender.toString();
             }
