@@ -109,4 +109,3 @@ $ curl -v -X DELETE "http://localhost:8080/the-crud/api/v1/users/23"
 
 ## Swagger UI Links
 - [Default Link](http://localhost:8080/the-crud/swagger-ui.html#/)
-- [Customized Link](http://localhost:8080/the-crud/docs)
